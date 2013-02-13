@@ -20,4 +20,106 @@ class TransactionTest < MiniTest::Unit::TestCase
     assert_equal '2012-03-27 14:53:59 UTC', transaction.created_at
     assert_equal '2012-03-27 14:53:59 UTC', transaction.updated_at
   end
+
+  def test_it_returns_random_transaction
+    transaction_one = Transaction.random
+    transaction_two = Transaction.random
+    transaction_three = Transaction.random
+    assert transaction_one != transaction_two
+    assert transaction_two != transaction_three
+    assert transaction_three != transaction_one
+  end
+
+id,invoice_id,credit_card_number,credit_card_expiration_date,result,created_at,updated_at
+1,1,4654405418249632,,success,2012-03-27 14:54:09 UTC,2012-03-27 14:54:09 UTC
+
+  ############################ ID
+
+  def test_it_finds_transactions_by_id
+    transaction = Transaction.find_by_id(8)
+    assert customer.id == 8
+  end
+
+  def test_it_finds_all_transactions_by_id
+    transactions = Transaction.find_all_by_id(8)
+    assert transactions.each { |transaction| transaction.id == 8 }
+  end
+
+  ############################ Invoice_ID
+
+  def test_it_finds_transactions_by_invoice_id
+    transaction = Transaction.find_by_invoice_id(1)
+    assert transaction.invoice_id == 1
+  end
+
+  def test_it_finds_all_transactions_by_invoice_id
+    transactions = Transaction.find_all_by_invoice_id(2)
+    assert transactions.count == 2
+    assert transactions.each { |transaction| transaction.invoice_id == 2 }
+  end
+
+  ############################ Credit_Card_Number
+
+  def test_it_finds_transactions_by_credit_card_number
+    transaction = Transaction.find_by_credit_card_number(4654405418249632)
+    assert transaction.credit_card_number == 4654405418249632
+  end
+
+  def test_it_finds_all_transactions_by_credit_card_number
+    transactions = Transaction.find_all_by_credit_card_number(4654405418249632)
+    assert transactions.count == 3
+    assert transactions.each { |transaction| transaction.credit_card_number == 4654405418249632 }
+  end
+
+  ############################ Credit_Card_Expiration_Date
+
+  def test_it_finds_transactions_by_credit_card_expiration_date
+    transaction = transaction.find_by_credit_card_expiration_date('')
+    assert transaction.credit_card_expiration_date == ''
+  end
+
+  def test_it_finds_all_transactions_by_credit_card_expiration_date
+    transactions = transaction.find_all_by_credit_card_expiration_date('')
+    assert transactions.count ==
+    assert transactions.each { |transaction| transaction.credit_card_expiration_date == '' }
+  end
+
+    ############################ Result
+
+  def test_it_finds_transactions_by_result
+    transaction = transaction.find_by_result('')
+    assert transaction.result == ''
+  end
+
+  def test_it_finds_all_transactions_by_result
+    transactions = transaction.find_all_by_result('')
+    assert transactions.count ==
+    assert transactions.each { |transaction| transaction.result == '' }
+  end
+
+  ############################ Created_At
+
+  def test_it_finds_transactions_by_created_at
+    transaction = transaction.find_by_created_at('')
+    assert transaction.created_at == ''
+  end
+
+  def test_it_finds_all_transactions_by_created_at
+    transactions = transaction.find_all_by_created_at('')
+    assert transactions.count ==
+    assert transactions.each { |transaction| transaction.created_at == '' }
+  end
+
+    ############################ Updated_At
+
+  def test_it_finds_transactions_by_updated_at
+    transaction = Transactions.find_by_updated_at('')
+    assert transaction.updated_at == ''
+  end
+
+  def test_it_finds_all_transactions_by_updated_at
+    transactions = Transaction.find_all_by_updated_at('')
+    assert transactions.count ==
+    assert transactions.each { |transaction| transaction.updated_at == '' }
+  end
 end
