@@ -1,27 +1,11 @@
 class Merchant
-#  attr_accessor :id, :name, :created_at, :updated_at
+  attr_reader :id, :name, :created_at, :updated_at
 
   def initialize(row)
     @id = row[:id]
     @name = row[:name]
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
-  end
-
-  def id
-    @id
-  end
-
-  def name
-    @name
-  end
-
-  def created_at
-    @created_at
-  end
-
-  def updated_at
-    @updated_at
   end
 
   #def self.find_by_id(id)
