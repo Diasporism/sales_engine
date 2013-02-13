@@ -7,7 +7,7 @@ class CustomerTest < MiniTest::Unit::TestCase
   end
 
   def test_it_builds_customers
-    assert_equal 1000, @customers
+    assert_equal 10, @customers
   end
 
   def test_customers_have_correct_state
@@ -25,10 +25,7 @@ class CustomerTest < MiniTest::Unit::TestCase
   def test_it_returns_random_customer
     customer_one = Customer.random
     customer_two = Customer.random
-    customer_three = Customer.random
     assert customer_one != customer_two
-    assert customer_two != customer_three
-    assert customer_three != customer_one
   end
 
   ############################ ID
@@ -46,52 +43,52 @@ class CustomerTest < MiniTest::Unit::TestCase
   ############################ First_Name
 
   def test_it_finds_by_first_name
-    customer = Customer.find_by_first_name('Magnus')
-    assert customer.first_name == 'magnus'
+    customer = Customer.find_by_first_name('Joey')
+    assert_equal customer.first_name, 'Joey'
   end
 
   def test_it_finds_all_by_first_name
-    customers = Customer.find_all_by_first_name('Magnus')
+    customers = Customer.find_all_by_first_name('Joey')
     assert customers.count == 2
-    assert customers.each { |customer| customer.first_name == 'magnus' }
+    assert customers.each { |customer| customer.first_name == 'Joey' }
   end
 
   ############################ Last_Name
 
   def test_it_finds_by_last_name
-    customer = Customer.find_by_last_name('Nader')
-    assert customer.last_name == 'nader'
+    customer = Customer.find_by_last_name('Toy')
+    assert customer.last_name == 'Toy'
   end
 
   def test_it_finds_all_by_last_name
-    customers = Customer.find_all_by_last_name('Nader')
-    assert customers.count == 3
-    assert customers.each { |customer| customer.last_name == 'nader' }
+    customers = Customer.find_all_by_last_name('Toy')
+    assert customers.count == 2
+    assert customers.each { |customer| customer.last_name == 'Toy' }
   end
 
   ############################ Created_At
 
   def test_it_finds_by_created_at
-    customer = Customer.find_by_created_at('')
-    assert customer.created_at == ''
+    customer = Customer.find_by_created_at('2012-06-27 14:54:10 UTC')
+    assert customer.created_at == '2012-06-27 14:54:10 UTC'
   end
 
   def test_it_finds_all_by_created_at
-    customers = Customer.find_all_by_created_at('')
-    assert customers.count ==
-    assert customers.each { |customer| customer.created_at == '' }
+    customers = Customer.find_all_by_created_at('2012-06-27 14:54:10 UTC')
+    assert customers.count == 2
+    assert customers.each { |customer| customer.created_at == '2012-06-27 14:54:10 UTC' }
   end
 
   ############################ Updated_At
 
   def test_it_finds_by_updated_at
-    customer = Customer.find_by_updated_at('')
-    assert customer.updated_at == ''
+    customer = Customer.find_by_updated_at('2012-07-27 14:54:10 UTC')
+    assert customer.updated_at == '2012-07-27 14:54:10 UTC'
   end
 
   def test_it_finds_all_by_updated_at
-    customers = Customer.find_all_by_updated_at('')
-    assert customers.count ==
-    assert customers.each { |customer| customer.updated_at == '' }
+    customers = Customer.find_all_by_updated_at('2012-07-27 14:54:10 UTC')
+    assert customers.count == 2
+    assert customers.each { |customer| customer.updated_at == '2012-07-27 14:54:10 UTC' }
   end
 end
