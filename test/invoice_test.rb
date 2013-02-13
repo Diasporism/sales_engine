@@ -2,8 +2,9 @@ require './test/support'
 
 class InvoiceTest < MiniTest::Unit::TestCase
 
-  def test_there_are_invoices
+  def test_it_builds_invoices
     contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+
     invoices = Invoice.build_invoice(contents)
     assert_equal 4843, invoices
   end
@@ -13,7 +14,6 @@ class InvoiceTest < MiniTest::Unit::TestCase
             :created_at => '2012-03-27 14:53:59 UTC', :updated_at => '2012-03-27 14:53:59 UTC'}
 
     invoice = Invoice.new(data)
-
     assert_equal '1', invoice.id
     assert_equal '2', invoice.customer_id
     assert_equal '3', invoice.merchant_id
