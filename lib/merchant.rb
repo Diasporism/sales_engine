@@ -66,16 +66,10 @@ class Merchant
   end
 
   def items
-    name = self.name
-    merchant = Merchant.find_by_name(name)
-    merchant_id = merchant.id
-    Item.find_all_by_merchant_id(merchant_id)
+    Item.find_all_by_merchant_id(id)
   end
 
   def invoices
-    name = self.name
-    merchant = Merchant.find_by_name(name)
-    merchant_id = merchant.id
-    Invoice.find_all_by_merchant_id(merchant_id)
+    Invoice.find_all_by_merchant_id(id)
   end
 end

@@ -95,7 +95,5 @@ class Item
 
   def invoice_items
     InvoiceItem.find_all_by_item_id(self.id)
-  end 
-
-
+  end
 end
