@@ -45,12 +45,12 @@ class InvoiceItem
 
     ############################ Invoice_ID
 
-  def self.find_by_invoice_id(invoiceid)
-    @@invoice_items.find { |invoice_item| invoice_item.invoice_id == invoiceid}
+  def self.find_by_invoice_id(invoice_id)
+    @@invoice_items.find { |invoice_item| invoice_item.invoice_id == invoice_id}
   end
 
   def self.find_all_by_invoice_id(invoice_id)
-    @@invoice_items.select { |invoice_item| invoice_item.invoice_id == invoiceid}
+    @@invoice_items.select { |invoice_item| invoice_item.invoice_id == invoice_id}
   end
 
   ############################ Quanitity
