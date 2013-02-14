@@ -1,11 +1,14 @@
 require './test/support'
 
 class InvoiceItemTest < MiniTest::Unit::TestCase
-  def test_it_builds_invoice_items
-    contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
 
-    invoice_items = InvoiceItem.build_invoice_item(contents)
-    assert_equal 21687, invoice_items
+  def setup
+    contents = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
+    @invoice_items = InvoiceItem.build_invoice_item(contents)
+  end
+
+  def test_it_builds_invoice_items
+    assert_equal 10, @invoice_items
   end
 
   def test_invoice_items_have_correct_state
@@ -21,4 +24,115 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
     assert_equal '2012-03-27 14:53:59 UTC', invoice_item.created_at
     assert_equal '2012-03-27 14:53:59 UTC', invoice_item.updated_at
   end
+
+  def test_it_returns_random_invoice_items
+    invoice_item_one = InvoiceItem.random
+    invoice_item_two = InvoiceItem.random
+    invoice_item_three = InvoiceItem.random
+    invoice_item_four = InvoiceItem.random
+    assert invoice_item_one != nil
+    assert invoice_item_two != nil
+    assert invoice_item_three != nil
+    assert invoice_item_one != invoice_item_two || invoice_item_one != invoice_item_three || invoice_item_one != invoice_item_four
+  end
+
+
+  ############################ ID
+
+  def test_it_finds_invoices_items_by_id
+    invoice_item = InvoiceItem.find_by_id(8)
+    assert invoice_item != nil
+    assert invoice_item.id == 8
+  end
+
+  def test_it_finds_all_invoice_items_by_id
+    invoice_items = InvoiceItem.find_all_by_id(8)
+    assert invoice_items.count == 1
+    assert invoice_items.each { |invoice_item| invoice_item.id == 8 }
+  end
+
+ ############################ Item_ID
+
+  def test_it_finds_invoice_items_by_item_id
+    invoice_item = InvoiceItem.find_by_item_id(1)
+    assert invoice_item != nil
+    assert invoice_item.item_id == 1
+  end
+
+  def test_it_finds_all_invoice_items_by_item_id
+    invoice_items = InvoiceItem.find_all_by_item_id(1)
+    assert invoice_items.count == 3
+    assert invoice_items.each { |invoice_item| invoice_item.item_id == 1 }
+  end
+
+ ############################ Invoice_ID
+
+  def test_it_finds_invoices_items_by_invoice_id
+    invoice_item = InvoiceItem.find_by_invoice_id(2)
+    assert invoice_item != nil
+    assert invoice_item.invoice_id == 2
+  end
+
+  def test_it_finds_all_invoice_items_by_invoice_id
+    invoice_items = InvoiceItem.find_all_by_invoice_id(2)
+    assert invoice_items.count == 2
+    assert invoice_items.each { |invoice_item| invoice_item.invoice_id == 2 }
+  end
+
+  ############################ Quanitity
+
+  def test_it_finds_invoice_items_by_quantity
+    invoice_item = InvoiceItem.find_by_quantity(9)
+    assert invoice_item != nil
+    assert invoice_item.quantity == 9
+  end
+
+  def test_it_finds_all_invoice_items_by_quantity
+    invoice_items = InvoiceItem.find_all_by_quantity(9)
+    assert invoice_items.count == 3
+    assert invoice_items.each { |invoice_item| invoice_item.quantity == 9 }
+  end
+
+    ############################ Unit Price
+
+  def test_it_finds_invoice_items_by_unit_price
+    invoice_item = InvoiceItem.find_by_unit_price(13635)
+    assert invoice_item != nil
+    assert invoice_item.unit_price == 13635
+  end
+
+  def test_it_finds_all_invoice_items_by_unit_price
+    invoice_items = InvoiceItem.find_all_by_unit_price(13635)
+    assert invoice_items.count == 2
+    assert invoice_items.each { |invoice_item| invoice_item == 13635 }
+  end
+
+  ############################ Created_At
+
+  def test_it_finds_invoice_items_by_created_at
+    invoice_item = InvoiceItem.find_by_created_at('2012-03-27 14:54:09 UTC')
+    assert invoice_item != nil
+    assert invoice_item.created_at == '2012-03-27 14:54:09 UTC'
+  end
+
+  def test_it_finds_all_invoice_items_by_created_at
+    invoice_items = InvoiceItem.find_all_by_created_at('2012-03-27 14:54:09 UTC')
+    assert invoice_items.count == 2
+    assert invoice_items.each { |invoice_item| invoice_item.created_at == '2012-03-27 14:54:09 UTC' }
+  end
+
+  ############################ Updated_At
+
+  def test_it_finds_invoice_items_by_updated_at
+    invoice_item = InvoiceItem.find_by_updated_at('2012-03-27 14:54:09 UTC')
+    assert invoice_item != nil
+    assert invoice_item.updated_at == '2012-03-27 14:54:09 UTC'
+  end
+
+  def test_it_finds_all_invoice_items_by_updated_at
+    invoice_items = InvoiceItem.find_all_by_updated_at('2012-03-27 14:54:09 UTC')
+    assert invoice_items.count == 2
+    assert invoice_items.each { |invoice_item| invoice_item.updated_at == '2012-03-27 14:54:09 UTC' }
+  end
+
 end

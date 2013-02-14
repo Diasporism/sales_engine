@@ -56,11 +56,11 @@ class InvoiceItem
   ############################ Quanitity
 
   def self.find_by_quantity(number)
-    @@invoice_items.find { |invoice_item| invoice_item.quanitity == number}
+    @@invoice_items.find { |invoice_item| invoice_item.quantity == number}
   end
 
-  def self.find_all_by_name(number)
-    @@invoice_items.select { |invoice_item| invoice_item.quanitity == number}
+  def self.find_all_by_quantity(number)
+    @@invoice_items.select { |invoice_item| invoice_item.quantity == number}
   end
 
   ############################ Unit Price
@@ -80,7 +80,7 @@ class InvoiceItem
   end
 
   def self.find_all_by_created_at(date)
-    @@invice_items.select { |invoice_item| invoice_item.created_at.downcase == date.downcase}
+    @@invoice_items.select { |invoice_item| invoice_item.created_at.downcase == date.downcase}
   end
 
   ############################ Updated_At
