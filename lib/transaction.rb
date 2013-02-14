@@ -2,68 +2,88 @@ class Transaction
   attr_reader :id, :invoice_id, :credit_card_number, :credit_card_expiration_date, :result, :created_at, :updated_at
 
   def initialize(row)
-    @id = row[:id]
-    @invoice_id = row[:invoice_id]
-    @credit_card_number = row[:credit_card_number]
-    @credit_card_expiration_date = row[:credit_card_expiration_date]
-    @result = row[:result]
-    @created_at = row[:created_at]
-    @updated_at = row[:updated_at]
+    @id = row[:id].to_i
+    @invoice_id = row[:invoice_id].to_i
+    @credit_card_number = row[:credit_card_number].to_i
+    @credit_card_expiration_date = row[:credit_card_expiration_date].to_s
+    @result = row[:result].to_s
+    @created_at = row[:created_at].to_s
+    @updated_at = row[:updated_at].to_s
   end
 
   def self.build_transaction(contents)
-    @@transaction = []
+    @@transactions = []
     contents.each do |row|
-      @@transaction << Transaction.new(row)
+      @@transactions << Transaction.new(row)
     end
-    @@transaction.count
+    @@transactions.count
   end
 
   def self.random
-    @@merchants.sample
+    @@transactions.sample
   end
 
   ############################ ID
 
   def self.find_by_id(id)
-    @@merchants.find { |merchant| merchant.id == id}
+    @@transactions.find { |transaction| transaction.id == id}
   end
 
   def self.find_all_by_id(id)
-    @@merchants.select { |merchant| merchant.id == id}
+    @@transactions.select { |transaction| transaction.id == id}
   end
 
-  ############################ Name
+  ############################ Invoice_ID
 
-  def self.find_by_name(name)
-    @@merchants.find { |merchant| merchant.name.downcase == name.downcase}
+  def self.find_by_invoice_id(id)
+    @@transactions.find { |transaction| transaction.invoice_id == id}
   end
 
-  def self.find_all_by_name(name)
-    @@merchants.select { |merchant| merchant.name.downcase == name.downcase}
+  def self.find_all_by_invoice_id(id)
+    @@transactions.select { |transaction| transaction.invoice_id == id}
+  end
+
+  ############################ Credit_Card_Number
+
+  def self.find_by_credit_card_number(number)
+    @@transactions.find { |transaction| transaction.credit_card_number == number}
+  end
+
+  def self.find_all_by_credit_card_number(number)
+    @@transactions.select { |transaction| transaction.credit_card_number == number}
+  end
+
+  ############################ Result
+
+  def self.find_by_result(result)
+    @@transactions.find { |transaction| transaction.result.downcase == result.downcase}
+  end
+
+  def self.find_all_by_result(result)
+    @@transactions.select { |transaction| transaction.result.downcase == result.downcase}
   end
 
   ############################ Created_At
 
   def self.find_by_created_at(date)
-    @@merchants.find { |merchant| merchant.created_at.downcase == date.downcase}
+    @@transactions.find { |transaction| transaction.created_at.downcase == date.downcase}
   end
 
   def self.find_all_by_created_at(date)
-    @@merchants.select { |merchant| merchant.created_at.downcase == date.downcase}
+    @@transactions.select { |transaction| transaction.created_at.downcase == date.downcase}
   end
 
   ############################ Updated_At
 
   def self.find_by_updated_at(date)
-    @@merchants.find { |merchant| merchant.updated_at.downcase == date.downcase}
+    @@transactions.find { |transaction| transaction.updated_at.downcase == date.downcase}
   end
 
   def self.find_all_by_updated_at(date)
-    @@merchants.select { |merchant| merchant.updated_at.downcase == date.downcase}
+    @@transactions.select { |transaction| transaction.updated_at.downcase == date.downcase}
   end
 
-  def self.merchants
-    @@merchants
+  def self.transactions
+    @@transactions
   end
 end

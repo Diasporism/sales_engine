@@ -123,9 +123,17 @@ class InvoiceTest < MiniTest::Unit::TestCase
     contents = CSV.open './test/test_data/transactions_sample.csv', headers: true, header_converters: :symbol
     Transaction.build_transaction(contents)
 
-    invoice = Invoice.find_by_id(2)
+    invoice = Invoice.find_by_id(1)
     transactions = invoice.transactions
     assert_equal 2, transactions.count
   end
 
+  def test_it_finds_invoices_invoice_items
+    contents = CSV.open './test/test_data/transactions_sample.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(contents)
+
+    invoice = Invoice.find_by_id(1)
+    invoice_items = invoice.invoice_items
+    assert_equal 2, invoice_items.count
+  end
 end

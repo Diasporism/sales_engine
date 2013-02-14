@@ -88,4 +88,11 @@ class Invoice
     invoice_id = invoice.id
     Transaction.find_all_by_invoice_id(invoice_id)
   end
+
+  def invoice_items
+    id = self.id
+    invoice = Invoice.find_by_id(id)
+    invoice_id = invoice.id
+    InvoiceItem.find_all_by_invoice_id(invoice_id)
+  end
 end
