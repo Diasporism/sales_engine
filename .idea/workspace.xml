@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="193aeeed-28b5-438e-86b4-4c5cda66e13d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/invoice.rb" afterPath="$PROJECT_DIR$/lib/invoice.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sales_engine.iws" />
@@ -17,7 +19,7 @@
     <file path="/customer.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360795648712" ignored="false" />
     <file path="/customer_test.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360802570961" ignored="false" />
     <file path="/invoice_test.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360787649463" ignored="false" />
-    <file path="/invoice.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360726272623" ignored="false" />
+    <file path="/invoice.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360811422116" ignored="false" />
     <file path="/transaction_test.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360727032350" ignored="false" />
     <file path="/transaction.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360727308677" ignored="false" />
     <file path="/invoice_item_test.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360787631828" ignored="false" />
@@ -27,7 +29,7 @@
     <file path="/database_test.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360788073745" ignored="false" />
     <file path="/database.rb" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360788296105" ignored="false" />
     <file path="/customers_sample.csv" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360792804024" ignored="false" />
-    <file path="/.gitignore" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360806553386" ignored="false" />
+    <file path="/.gitignore" changelist="193aeeed-28b5-438e-86b4-4c5cda66e13d" time="1360808488114" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,37 +46,19 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="customer.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/customer.rb">
+      <file leaf-file-name="invoice.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/invoice.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="2" selection-start="298" selection-end="498" vertical-scroll-proportion="0.0">
+            <state line="80" column="39" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.80659026">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="customer_test.rb" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test/customer_test.rb">
+      <file leaf-file-name="invoices_sample.csv" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/test_data/invoices_sample.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="35" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.021489972">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="item.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/item.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="41" selection-start="1316" selection-end="1316" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="item_test.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/item_test.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="60" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.0">
+            <state line="1" column="3" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,7 +82,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/database_test.rb" />
         <option value="$PROJECT_DIR$/test/test_data/customers.csv" />
         <option value="$PROJECT_DIR$/lib/parser.rb" />
         <option value="$PROJECT_DIR$/test/test_data/invoice_items_sample.csv" />
@@ -114,6 +97,7 @@
         <option value="$PROJECT_DIR$/test/item_test.rb" />
         <option value="$PROJECT_DIR$/test/customer_test.rb" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/lib/invoice.rb" />
       </list>
     </option>
   </component>
@@ -156,9 +140,15 @@
               <option name="myItemId" value="sales_engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -168,6 +158,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test_data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sales_engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -409,45 +435,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/test_data/invoice_items_sample.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="64" selection-start="704" selection-end="704" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_data/invoices_sample.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="54" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/test_data/customers_sample.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="38" selection-start="245" selection-end="268" vertical-scroll-proportion="0.08595989" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/support.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="24" selection-start="114" selection-end="114" vertical-scroll-proportion="0.12893982">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sales_engine.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/merchants.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="19" selection-start="191" selection-end="191" vertical-scroll-proportion="0.06446991" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/invoices.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="19" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/parser.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -465,13 +452,6 @@
         <state line="0" column="0" selection-start="0" selection-end="2436" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/customer.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="2" selection-start="298" selection-end="498" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/test_data/items_sample.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="190" selection-start="1118" selection-end="1118" vertical-scroll-proportion="-3.0">
@@ -486,6 +466,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/merchant.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/transaction.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/customer_test.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="35" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/item_test.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="60" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.0">
@@ -493,16 +494,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/test/merchant_test.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="5" selection-start="14" selection-end="14" vertical-scroll-proportion="0.021489972">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/customer_test.rb">
+    <entry file="file://$PROJECT_DIR$/test/transaction_test.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="35" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.021489972">
+        <state line="30" column="7" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.64469916">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="9" selection-start="24" selection-end="24" vertical-scroll-proportion="0.042979944">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/support.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="116" selection-end="116" vertical-scroll-proportion="0.17191978">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/customer.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="5" selection-start="455" selection-end="1884" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_data/invoices_sample.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="3" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/invoice.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="39" selection-start="1979" selection-end="1979" vertical-scroll-proportion="0.80659026">
           <folding />
         </state>
       </provider>
