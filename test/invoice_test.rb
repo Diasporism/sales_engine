@@ -33,9 +33,6 @@ class InvoiceTest < MiniTest::Unit::TestCase
     assert invoice_one != invoice_two || invoice_one != invoice_three || invoice_one != invoice_four
   end
 
-  id,customer_id,merchant_id,status,created_at,updated_at
-1,1,26,shipped,2012-03-25 09:54:09 UTC,2012-03-25 09:54:09 UTC
-
   ############################ ID
 
   def test_it_finds_invoices_by_id
