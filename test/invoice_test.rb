@@ -2,31 +2,33 @@ require './test/support'
 
 class InvoiceTest < MiniTest::Unit::TestCase
 
-  def test_it_builds_invoices
-    contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    def setup
+    contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    @invoices = Invoice.build_invoice(contents)
+  end
 
-    invoices = Invoice.build_invoice(contents)
-    assert_equal 4843, invoices
+  def test_it_builds_invoices
+    assert_equal 10, @invoices
   end
 
   def test_invoices_have_correct_state
-    data = {:id => '1', :invoice_id => '2', :merchant_id => '3', :status => 'shipped',
+    data = {:id => '1', :customer_id => '2', :merchant_id => '3', :status => 'shipped',
             :created_at => '2012-03-27 14:53:59 UTC', :updated_at => '2012-03-27 14:53:59 UTC'}
 
     invoice = Invoice.new(data)
-    assert_equal '1', invoice.id
-    assert_equal '2', invoice.invoice_id
-    assert_equal '3', invoice.merchant_id
+    assert_equal 1, invoice.id
+    assert_equal 2, invoice.customer_id
+    assert_equal 3, invoice.merchant_id
     assert_equal 'shipped', invoice.status
     assert_equal '2012-03-27 14:53:59 UTC', invoice.created_at
     assert_equal '2012-03-27 14:53:59 UTC', invoice.updated_at
   end
 
   def test_it_returns_random_invoice
-    invoice_one = invoice.random
-    invoice_two = invoice.random
-    invoice_three = invoice.random
-    invoice_four = invoice.random
+    invoice_one = Invoice.random
+    invoice_two = Invoice.random
+    invoice_three = Invoice.random
+    invoice_four = Invoice.random
     assert invoice_one != nil
     assert invoice_two != nil
     assert invoice_three != nil
@@ -56,9 +58,9 @@ class InvoiceTest < MiniTest::Unit::TestCase
   end
 
   def test_it_finds_all_invoices_by_customer_id
-    invoices = Invoice.find_all_by_customer_id('Joey')
+    invoices = Invoice.find_all_by_customer_id(1)
     assert invoices.count == 2
-    assert invoices.each { |invoice| invoice.customer_id == 'Joey' }
+    assert invoices.each { |invoice| invoice.customer_id == 1 }
   end
 
   ############################ Merchant_ID
