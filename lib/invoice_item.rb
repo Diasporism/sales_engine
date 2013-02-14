@@ -3,10 +3,10 @@ class InvoiceItem
 
   def initialize(row)
     @id = row[:id]
-    @item_id = row[:item_id]
-    @invoice_id = row[:invoice_id]
-    @quantity = row[:quantity]
-    @unit_price = row[:unit_price]
+    @item_id = row[:item_id].to_i
+    @invoice_id = row[:invoice_id].to_i
+    @quantity = row[:quantity].to_i
+    @unit_price = row[:unit_price].to_i
     @created_at = row[:created_at]
     @updated_at = row[:updated_at]
   end
@@ -39,7 +39,7 @@ class InvoiceItem
     @@invoice_items.find { |invoice_item| invoice_item.item_id == id}
   end
 
-  def self.find_all_by_item_id(item_id)
+  def self.find_all_by_item_id(id)
     @@invoice_items.select { |invoice_item| invoice_item.item_id == id}
   end
 

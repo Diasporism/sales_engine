@@ -133,7 +133,7 @@ class ItemTest < MiniTest::Unit::TestCase
     assert items.each { |customer| customer.updated_at == '2012-03-27 05:53:59 UTC' }
   end
 
-  def test_it_finds_invoice_items_by_items
+  def test_it_finds_items_invoice_items
     contents = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
     InvoiceItem.build_invoice_item(contents)
 
@@ -141,15 +141,5 @@ class ItemTest < MiniTest::Unit::TestCase
     invoice_items = item.invoice_items
     assert_equal 3, invoice_items.count
   end 
-
-
-  # def test_it_finds_merchants_items
-  #   contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
-  #   Item.build_item(contents)
-
-  #   merchant = Merchant.find_by_name('Schroeder-Jerde')
-  #   items = merchant.items
-  #   assert_equal 2, items.count
-  # end
 
 end
