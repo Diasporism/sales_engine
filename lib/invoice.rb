@@ -103,8 +103,6 @@ class Invoice
   end
 
   def customer
-    invoice = Invoice.find_by_id(id)
-    customer_id = invoice.customer_id
     Customer.find_by_id(customer_id)
   end
 end
