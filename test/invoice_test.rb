@@ -136,4 +136,30 @@ class InvoiceTest < MiniTest::Unit::TestCase
     invoice_items = invoice.invoice_items
     assert_equal 2, invoice_items.count
   end
+
+  def test_it_finds_invoices_items
+    item_list = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_list)
+
+    invoice_item_list = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_list)
+
+    invoice = Invoice.find_by_id(2)
+
+    item_list = invoice.items
+    assert_equal 2, item_list.count
+  end
+
+  def test_it_finds_invoices_customer
+    contents = CSV.open './test/test_data/customers_sample.csv', headers: true, header_converters: :symbol
+    Customer.build_customer(contents)
+
+    invoice = Invoice.find_by_id(2)
+    customer = invoice.customer
+    assert customer != nil
+    assert_equal 'Joey', customer.first_name
+    assert_equal 'Ondricka', customer.last_name
+    assert_equal '2012-03-27 14:54:09 UTC', customer.created_at
+    assert_equal '2012-03-27 14:54:09 UTC', customer.updated_at
+  end
 end
