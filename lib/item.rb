@@ -92,4 +92,19 @@ class Item
   def self.find_all_by_updated_at(date)
     @@items.select { |item| item.updated_at.downcase == date.downcase}
   end
+
+  def invoice_items
+    id = self.id
+    item = Item.find_by_id(id)
+    item_id = item.id
+    InvoiceItem.find_all_by_item_id(item_id)
+  end 
+
+  # def items
+  #   name = self.name
+  #   merchant = Merchant.find_by_name(name)
+  #   merchant_id = merchant.id
+  #   Item.find_all_by_merchant_id(merchant_id)
+  # end
+
 end

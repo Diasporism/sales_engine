@@ -13,7 +13,6 @@ class Merchant
     contents.each do |row|
       @@merchants << Merchant.new(row)
     end
-    Database.store(@@merchants)
     @@merchants.count
   end
 
