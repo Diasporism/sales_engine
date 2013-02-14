@@ -1,9 +1,10 @@
 class Database
-  def initialize
-
+  def self.store(data)
+    @@database = []
+    @@database << data
   end
 
-  def store(data)
-    customers = data
+  def self.return(data)
+    data
   end
 end

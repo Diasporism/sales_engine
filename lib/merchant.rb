@@ -8,20 +8,12 @@ class Merchant
     @updated_at = row[:updated_at].to_s
   end
 
-  #def self.find_by_id(id)
-  #  merchants.find{ |merchant| merchant.id == id}
-  #end
-  #
-  #def self.parse_merchants
-  #  contents = CSV.open 'merchants.csv', headers: true, header_converters: :symbol
-  #  build_merchant(contents)
-  #end
-
   def self.build_merchant(contents)
     @@merchants = []
     contents.each do |row|
       @@merchants << Merchant.new(row)
     end
+    Database.store(@@merchants)
     @@merchants.count
   end
 
@@ -70,13 +62,30 @@ class Merchant
     @@merchants.select { |merchant| merchant.updated_at.downcase == date.downcase}
   end
 
-#
-#  def self.merchants
-#    @@merchants
-#  end
+  def self.merchants
+    @@merchants
+  end
+
+  def items
+    name = self.name
+    find_items_for_merchant(name)
+  end
+
+  def find_items_for_merchant(name)
+    merchant = Merchant.find_by_name(name)
+    merchant_id = merchant.id
+    Item.find_all_by_merchant_id(merchant_id)
+  end
+
+  def invoices
+    name = self.name
+    find_invoices_for_merchant(name)
+  end
+
+  def find_invoices_for_merchant(name)
+    merchant = Merchant.find_by_name(name)
+    merchant_id = merchant.id
+    Invoice.find_all_by_merchant_id(merchant_id)
+  end
+
 end
-#
-#
-#Merchant.parse_merchants
-#
-#Merchant.find_by_id(4)

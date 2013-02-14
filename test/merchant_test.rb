@@ -3,8 +3,9 @@ require './test/support'
 class MerchantTest < MiniTest::Unit::TestCase
 
   def setup
-    contents = CSV.open './test/test_data/merchants_sample.csv', headers: true, header_converters: :symbol
-    @merchants = Merchant.build_merchant(contents)
+    merchants = CSV.open './test/test_data/merchants_sample.csv', headers: true, header_converters: :symbol
+    @merchants = Merchant.build_merchant(merchants)
+
   end
 
   def test_it_builds_merchants
@@ -78,6 +79,24 @@ class MerchantTest < MiniTest::Unit::TestCase
     merchants = Merchant.find_all_by_updated_at('2012-03-27 14:53:59 UTC')
     assert merchants.count == 3
     assert merchants.each { |merchant| merchant.updated_at == '2012-03-27 14:53:59 UTC' }
+  end
+
+  def test_it_finds_merchants_items
+    contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
+    Item.build_item(contents)
+
+    merchant = Merchant.find_by_name('Schroeder-Jerde')
+    items = merchant.items
+    assert_equal 2, items.count
+  end
+
+  def test_it_finds_merchants_invoice
+    contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(contents)
+
+    merchant = Merchant.find_by_name('Schroeder-Jerde')
+    invoices = merchant.invoices
+    assert_equal 3, invoices.count
   end
 
 end
