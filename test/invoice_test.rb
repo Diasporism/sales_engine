@@ -119,4 +119,13 @@ class InvoiceTest < MiniTest::Unit::TestCase
     assert invoices.each { |invoice| invoice.updated_at == '2012-03-25 09:54:09 UTC' }
   end
 
+  def test_it_finds_invoices_transactions
+    contents = CSV.open './test/test_data/transactions_sample.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(contents)
+
+    invoice = Invoice.find_by_id(2)
+    transactions = invoice.transactions
+    assert_equal 2, transactions.count
+  end
+
 end
