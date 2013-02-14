@@ -115,4 +115,3 @@ class TransactionTest < MiniTest::Unit::TestCase
     assert transactions.each { |transaction| transaction.updated_at == '2012-03-27 09:54:10 UTC' }
   end
 end
->>>>>>> Stashed changes
