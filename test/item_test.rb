@@ -148,10 +148,8 @@ class ItemTest < MiniTest::Unit::TestCase
 
     item = Item.find_by_id(1)
     merchants = item.merchant
-    puts merchants.class
     assert_equal 1, merchants.id
-  end 
-
+  end
 end
 
 

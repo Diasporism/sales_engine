@@ -110,10 +110,7 @@ class CustomerTest < MiniTest::Unit::TestCase
     customer = Customer.find_by_id(1)
     invoices = customer.invoices
     assert_equal 2, invoices.count
-
-  end 
-
-
+  end
 end
 
 

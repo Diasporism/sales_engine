@@ -73,6 +73,5 @@ class Customer
 
   def invoices
     Invoice.find_all_by_customer_id(id)
-  end 
-
+  end
 end

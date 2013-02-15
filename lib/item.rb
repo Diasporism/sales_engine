@@ -98,7 +98,6 @@ class Item
   end
 
   def merchant
-    merchants = Merchant.find_by_id(id)
-  end 
-
+    Merchant.find_by_id(id)
+  end
 end
