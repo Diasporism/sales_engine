@@ -142,4 +142,24 @@ class ItemTest < MiniTest::Unit::TestCase
     assert_equal 3, invoice_items.count
   end 
 
+  def test_it_returns_items_merchants
+    contents = CSV.open './test/test_data/merchants_sample.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(contents)
+
+    item = Item.find_by_id(1)
+    merchants = item.merchant
+    puts merchants.class
+    assert_equal 1, merchants.id
+  end 
+
 end
+
+
+
+
+
+
+
+
+
+

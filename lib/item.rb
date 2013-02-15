@@ -94,6 +94,11 @@ class Item
   end
 
   def invoice_items
-    InvoiceItem.find_all_by_item_id(self.id)
+    InvoiceItem.find_all_by_item_id(id)
   end
+
+  def merchant
+    merchants = Merchant.find_by_id(id)
+  end 
+
 end

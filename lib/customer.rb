@@ -70,4 +70,9 @@ class Customer
   def self.find_all_by_updated_at(date)
     @@customer.select { |customer| customer.updated_at.downcase == date.downcase}
   end
+
+  def invoices
+    Invoice.find_all_by_customer_id(id)
+  end 
+
 end

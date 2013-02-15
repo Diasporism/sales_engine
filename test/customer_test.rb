@@ -102,4 +102,21 @@ class CustomerTest < MiniTest::Unit::TestCase
     assert customers.count == 2
     assert customers.each { |customer| customer.updated_at == '2012-07-27 14:54:10 UTC' }
   end
+
+  def test_it_returns_customers_invoices
+    contents = CSV.open './test/test_data/invoices_sample.csv', headers:true, header_converters: :symbol
+    Invoice.build_invoice(contents)
+
+    customer = Customer.find_by_id(1)
+    invoices = customer.invoices
+    assert_equal 2, invoices.count
+
+  end 
+
+
 end
+
+
+
+
+

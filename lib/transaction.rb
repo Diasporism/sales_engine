@@ -86,4 +86,9 @@ class Transaction
   def self.transactions
     @@transactions
   end
+
+  def invoice
+    Invoice.find_by_id(invoice_id)
+  end 
+
 end

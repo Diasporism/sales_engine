@@ -114,4 +114,17 @@ class TransactionTest < MiniTest::Unit::TestCase
     assert transactions.count == 2
     assert transactions.each { |transaction| transaction.updated_at == '2012-03-27 09:54:10 UTC' }
   end
+
+  def test_it_finds_transactions_invoices
+    contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(contents)
+
+    transactions = Transaction.find_by_id(3)
+    invoices = transactions.invoice
+    puts invoices.inspect
+    assert_equal 26, invoices.merchant_id
+    #need to check this test- is this the right test for this? 
+  end 
+
+
 end
