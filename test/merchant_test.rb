@@ -99,4 +99,21 @@ class MerchantTest < MiniTest::Unit::TestCase
     assert_equal 3, invoices.count
   end
 
+  def test_it_returns_top_merchants_by_revenue
+  end 
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
