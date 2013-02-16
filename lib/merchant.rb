@@ -72,4 +72,8 @@ class Merchant
   def invoices
     Invoice.find_all_by_merchant_id(id)
   end
+
+  def self.most_revenue(rank)
+
+  end
 end
