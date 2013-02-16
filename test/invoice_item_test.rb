@@ -135,4 +135,34 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
     assert invoice_items.each { |invoice_item| invoice_item.updated_at == '2012-03-27 14:54:09 UTC' }
   end
 
+  def test_it_finds_invoice_items_invoice
+    contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(contents)
+
+    invoice_item = InvoiceItem.find_by_id(2)
+    invoice = invoice_item.invoice
+    assert invoice != nil
+    assert_equal 1, invoice.id
+    assert_equal 1, invoice.customer_id
+    assert_equal 1, invoice.merchant_id
+    assert_equal 'shipped', invoice.status
+    assert_equal '2012-03-25 09:54:09 UTC', invoice.created_at
+    assert_equal '2012-03-25 09:54:09 UTC', invoice.updated_at
+  end
+
+  def test_it_finds_invoice_items_item
+    contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
+    Item.build_item(contents)
+
+    invoice_item = InvoiceItem.find_by_id(3)
+    item = invoice_item.item
+    assert item != nil
+    assert_equal 1, item.id
+    assert_equal 'Item Qui Esse', item.name
+    assert_equal 'Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.', item.description
+    assert_equal 75107, item.unit_price
+    assert_equal 1, item.merchant_id
+    assert_equal '2012-03-27 01:53:59 UTC', item.created_at
+    assert_equal '2012-03-27 01:53:59 UTC', item.updated_at
+  end
 end
