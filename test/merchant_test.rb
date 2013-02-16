@@ -99,22 +99,20 @@ class MerchantTest < MiniTest::Unit::TestCase
     assert_equal 3, invoices.count
   end
 
- def test_it_returns_top_merchants_by_revenue
-    invoice_contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
-    invoices = Invoice.build_invoice(invoice_contents)
+  def test_it_returns_top_merchants_by_revenue
+    invoice_contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
 
-    invoice_item_contents = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
-    invoice_items = InvoiceItem.build_invoice_item(invoice_item_contents)
+    invoice_item_contents = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
 
-    item_contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
-    items = Item.build_item(item_contents)
+    item_contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
 
     transaction_contents = CSV.open './test/test_data/transactions_sample.csv', headers: true, header_converters: :symbol
-    transactions = Transaction.build_transaction(transaction_contents)
+    Transaction.build_transaction(transaction_contents)
 
-    ranked = @merchants.most_revenue(3)
-
-    assert_equal 3, ranked.count
-  end
+    ranked = @merchants.most_revenue(3)
+    assert_equal 3, ranked.count
+  end
 end
-
