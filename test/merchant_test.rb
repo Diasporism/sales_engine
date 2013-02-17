@@ -100,19 +100,22 @@ class MerchantTest < MiniTest::Unit::TestCase
   end
 
   def test_it_returns_top_merchants_by_revenue
-    invoice_contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
     Invoice.build_invoice(invoice_contents)
 
-    invoice_item_contents = CSV.open './test/test_data/invoice_items_sample.csv', headers: true, header_converters: :symbol
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
     InvoiceItem.build_invoice_item(invoice_item_contents)
 
-    item_contents = CSV.open './test/test_data/items_sample.csv', headers: true, header_converters: :symbol
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
     Item.build_item(item_contents)
 
-    transaction_contents = CSV.open './test/test_data/transactions_sample.csv', headers: true, header_converters: :symbol
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
     Transaction.build_transaction(transaction_contents)
 
-    ranked = @merchants.most_revenue(3)
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    ranked = Merchant.most_revenue(3)
     assert_equal 3, ranked.count
   end
 end

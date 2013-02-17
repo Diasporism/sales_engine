@@ -121,6 +121,6 @@ class TransactionTest < MiniTest::Unit::TestCase
 
     transactions = Transaction.find_by_id(3)
     invoices = transactions.invoice
-    assert_equal 26, invoices.merchant_id
+    assert_equal 1, invoices.merchant_id
   end
 end

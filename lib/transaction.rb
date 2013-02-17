@@ -90,4 +90,9 @@ class Transaction
   def invoice
     Invoice.find_by_id(invoice_id)
   end
+
+  def self.get_successful_transaction
+    successful_transactions = @@transactions.select { |transaction| transaction.result == 'success' }
+    InvoiceItem.gather_invoice_items_from_successful_transactions(successful_transactions)
+  end
 end

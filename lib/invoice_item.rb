@@ -1,3 +1,6 @@
+require 'merchant'
+require 'bigdecimal'
+
 class InvoiceItem
   attr_reader :id, :item_id, :invoice_id, :quantity, :unit_price, :created_at, :updated_at
 
@@ -99,5 +102,32 @@ class InvoiceItem
 
   def item
     Item.find_by_id(item_id)
+  end
+
+  def self.gather_invoice_items_from_successful_transactions(successful_transactions)
+    invoice_items = []
+    successful_transactions.each do |transaction|
+      if InvoiceItem.find_by_invoice_id(transaction.invoice_id) == nil
+      else
+      invoice_items << InvoiceItem.find_by_invoice_id(transaction.invoice_id)
+      end
+    end
+    sum_invoice_items_for_each_invoice(invoice_items)
+  end
+
+  def self.sum_invoice_items_for_each_invoice(invoice_items)
+    invoice_totals = {}
+    invoice_items.each do |invoice_item|
+      value = (invoice_item.quantity * invoice_item.unit_price)
+      value = BigDecimal.new(value)
+      key = invoice_item.invoice_id
+
+      if value && !invoice_totals[key]
+        invoice_totals[key] = value
+      else
+        invoice_totals[key] += value
+      end
+    end
+    Merchant.sum_invoice_revenue_by_merchant_id(invoice_totals)
   end
 end

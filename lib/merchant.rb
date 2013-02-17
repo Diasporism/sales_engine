@@ -1,3 +1,5 @@
+require 'invoice'
+
 class Merchant
   attr_reader :id, :name, :created_at, :updated_at
 
@@ -74,6 +76,26 @@ class Merchant
   end
 
   def self.most_revenue(rank)
+    if rank == 0
+      rank = 1
+    end
+    Transaction.get_successful_transaction
+    @merchant_revenues_sorted_array[0..(rank - 1)]
+  end
 
+  def self.sum_invoice_revenue_by_merchant_id(invoice_totals)
+    merchant_revenues = {}
+    invoice_totals.each do |invoice_total|
+      value = invoice_total[1]
+      invoice = Invoice.find_by_id(invoice_total[0])
+      key = invoice.merchant_id
+      if value && !merchant_revenues[key]
+        merchant_revenues[key] = value
+      else
+        merchant_revenues[key] += value
+      end
+    end
+    merchant_revenues_array = merchant_revenues.sort
+    @merchant_revenues_sorted_array = merchant_revenues_array.sort {|a,b| b[1] <=> a[1]}
   end
 end
