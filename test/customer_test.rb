@@ -6,6 +6,10 @@ class CustomerTest < MiniTest::Unit::TestCase
     @customers = Customer.build_customer(contents)
   end
 
+  def teardown
+    Customer.clear
+  end
+
   def test_it_builds_customers
     assert_equal 10, @customers
   end

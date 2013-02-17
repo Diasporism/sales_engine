@@ -6,6 +6,10 @@ class ItemTest < MiniTest::Unit::TestCase
     @items = Item.build_item(contents)
   end
 
+  def teardown
+    Item.clear
+  end
+
   def test_it_builds_items
     assert_equal 10, @items
   end

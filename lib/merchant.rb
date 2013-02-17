@@ -18,6 +18,9 @@ class Merchant
     @@merchants.count
   end
 
+  def self.clear
+    @@merchants.clear
+  end
 
   def self.random
     @@merchants.sample
@@ -80,22 +83,17 @@ class Merchant
       rank = 1
     end
     Transaction.get_successful_transaction
-    @merchant_revenues_sorted_array[0..(rank - 1)]
+    @merchant_revenues_array[0..(rank - 1)]
   end
 
   def self.sum_invoice_revenue_by_merchant_id(invoice_totals)
-    merchant_revenues = {}
-    invoice_totals.each do |invoice_total|
-      value = invoice_total[1]
-      invoice = Invoice.find_by_id(invoice_total[0])
+    merchant_revenues = Hash.new(0)
+    invoice_totals.each_pair do |k, v|
+      invoice = Invoice.find_by_id(k)
       key = invoice.merchant_id
-      if value && !merchant_revenues[key]
-        merchant_revenues[key] = value
-      else
-        merchant_revenues[key] += value
-      end
+      merchant_revenues[key] += v
     end
-    merchant_revenues_array = merchant_revenues.sort
-    @merchant_revenues_sorted_array = merchant_revenues_array.sort {|a,b| b[1] <=> a[1]}
+    @merchant_revenues_array = merchant_revenues.sort_by { |k,v| v }.reverse
+    puts @merchant_revenues_array
   end
 end

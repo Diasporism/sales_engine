@@ -18,6 +18,10 @@ class Invoice
     @@invoices.count
   end
 
+  def self.clear
+    @@invoices.clear
+  end
+
   def self.random
     @@invoices.sample
   end

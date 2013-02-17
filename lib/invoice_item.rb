@@ -22,7 +22,11 @@ class InvoiceItem
     @@invoice_items.count
   end
 
-    def self.random
+  def self.clear
+    @@invoice_items.clear
+  end
+
+  def self.random
     @@invoice_items.sample
   end
 
@@ -107,26 +111,20 @@ class InvoiceItem
   def self.gather_invoice_items_from_successful_transactions(successful_transactions)
     invoice_items = []
     successful_transactions.each do |transaction|
-      if InvoiceItem.find_by_invoice_id(transaction.invoice_id) == nil
-      else
-      invoice_items << InvoiceItem.find_by_invoice_id(transaction.invoice_id)
-      end
+      invoice_items << InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)
     end
+    invoice_items.flatten!
     sum_invoice_items_for_each_invoice(invoice_items)
   end
 
   def self.sum_invoice_items_for_each_invoice(invoice_items)
-    invoice_totals = {}
+    invoice_totals = Hash.new(0)
     invoice_items.each do |invoice_item|
-      value = (invoice_item.quantity * invoice_item.unit_price)
-      value = BigDecimal.new(value)
-      key = invoice_item.invoice_id
-
-      if value && !invoice_totals[key]
-        invoice_totals[key] = value
-      else
+        value = (invoice_item.quantity * invoice_item.unit_price)
+        value = BigDecimal.new(value)
+        value = value.truncate(2)
+        key = invoice_item.invoice_id
         invoice_totals[key] += value
-      end
     end
     Merchant.sum_invoice_revenue_by_merchant_id(invoice_totals)
   end

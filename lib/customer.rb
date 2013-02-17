@@ -17,6 +17,10 @@ class Customer
     @@customer.count
   end
 
+  def self.clear
+    @@customer.clear
+  end
+
   def self.random
     @@customer.sample
   end

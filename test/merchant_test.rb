@@ -5,7 +5,10 @@ class MerchantTest < MiniTest::Unit::TestCase
   def setup
     merchants = CSV.open './test/test_data/merchants_sample.csv', headers: true, header_converters: :symbol
     @merchants = Merchant.build_merchant(merchants)
+  end
 
+  def teardown
+    Merchant.clear
   end
 
   def test_it_builds_merchants

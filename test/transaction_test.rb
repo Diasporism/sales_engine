@@ -6,6 +6,10 @@ class TransactionTest < MiniTest::Unit::TestCase
     @transactions = Transaction.build_transaction(contents)
   end
 
+  def teardown
+    Transaction.clear
+  end
+
   def test_there_are_merchants
     assert_equal 9, @transactions
   end

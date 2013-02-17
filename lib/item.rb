@@ -19,6 +19,10 @@ class Item
     @@items.count
   end
 
+  def self.clear
+    @@items.clear
+  end
+
   def self.random
     @@items.sample
   end

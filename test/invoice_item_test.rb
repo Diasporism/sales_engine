@@ -7,6 +7,10 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
     @invoice_items = InvoiceItem.build_invoice_item(contents)
   end
 
+  def teardown
+    InvoiceItem.clear
+  end
+
   def test_it_builds_invoice_items
     assert_equal 10, @invoice_items
   end

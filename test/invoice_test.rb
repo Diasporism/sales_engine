@@ -2,9 +2,13 @@ require './test/support'
 
 class InvoiceTest < MiniTest::Unit::TestCase
 
-    def setup
+  def setup
     contents = CSV.open './test/test_data/invoices_sample.csv', headers: true, header_converters: :symbol
     @invoices = Invoice.build_invoice(contents)
+  end
+
+  def teardown
+    Invoice.clear
   end
 
   def test_it_builds_invoices

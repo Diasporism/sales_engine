@@ -19,6 +19,10 @@ class Transaction
     @@transactions.count
   end
 
+  def self.clear
+    @@transactions.clear
+  end
+
   def self.random
     @@transactions.sample
   end
