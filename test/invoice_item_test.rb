@@ -150,8 +150,8 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
     assert_equal 1, invoice.customer_id
     assert_equal 1, invoice.merchant_id
     assert_equal 'shipped', invoice.status
-    assert_equal '2012-03-25 09:54:09 UTC', invoice.created_at
-    assert_equal '2012-03-25 09:54:09 UTC', invoice.updated_at
+    assert_equal Date.parse('2012-03-25 09:54:09 UTC'), invoice.created_at
+    assert_equal Date.parse('2012-03-25 09:54:09 UTC'), invoice.updated_at
   end
 
   def test_it_finds_invoice_items_item

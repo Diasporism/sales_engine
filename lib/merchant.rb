@@ -78,19 +78,35 @@ class Merchant
     Invoice.find_all_by_merchant_id(id)
   end
 
-  def self.most_revenue(rank)
-    rank = 1 if rank == 0
-    Merchant.sum_invoice_revenue_by_merchant_id(InvoiceItem.gather_invoice_items_from_successful_transactions(Transaction.get_successful_transaction))
-    @merchant_revenues_array[0..(rank - 1)].map { |item| Merchant.find_by_id(item[0]) }
+  def self.rank(array, rank)
+    array[0..(rank - 1)].map { |item| Merchant.find_by_id(item[0]) }
   end
 
-  def self.sum_invoice_revenue_by_merchant_id(invoice_totals)
+  def self.most_revenue(rank)
+    rank = 1 if rank == 0
+    most_items = Merchant.sum_value_by_merchant_id(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
+    rank(most_items, rank)
+  end
+
+  def self.most_items(rank)
+    rank = 1 if rank == 0
+    most_items = Merchant.sum_value_by_merchant_id(InvoiceItem.get_invoice_quantity(Transaction.get_successful_transaction))
+    rank(most_items, rank)
+  end
+
+  def self.revenue(date)
+    date = Date.parse(date)
+    array = Invoice.sum_revenue_by_date(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
+    array.select { |item| item[0] == date }
+  end
+
+  def self.sum_value_by_merchant_id(invoice_totals)
     merchant_revenues = Hash.new(0)
     invoice_totals.each_pair do |k, v|
       invoice = Invoice.find_by_id(k)
       key = invoice.merchant_id
       merchant_revenues[key] += v
     end
-    @merchant_revenues_array = merchant_revenues.sort_by { |k,v| v }.reverse
+    merchant_revenues.sort_by { |k,v| v }.reverse
   end
 end

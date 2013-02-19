@@ -1,4 +1,5 @@
 require 'CSV'
+require 'Date'
 
 require './lib/parser'
 require './lib/merchant'

@@ -24,8 +24,8 @@ class InvoiceTest < MiniTest::Unit::TestCase
     assert_equal 2, invoice.customer_id
     assert_equal 3, invoice.merchant_id
     assert_equal 'shipped', invoice.status
-    assert_equal '2012-03-27 14:53:59 UTC', invoice.created_at
-    assert_equal '2012-03-27 14:53:59 UTC', invoice.updated_at
+    assert_equal Date.parse('2012-03-27 14:53:59 UTC'), invoice.created_at
+    assert_equal Date.parse('2012-03-27 14:53:59 UTC'), invoice.updated_at
   end
 
   def test_it_returns_random_invoice
@@ -100,7 +100,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def test_it_finds_invoices_by_created_at
     invoice = Invoice.find_by_created_at('2012-03-25 09:54:09 UTC')
     assert invoice != nil
-    assert invoice.created_at == '2012-03-25 09:54:09 UTC'
+    assert invoice.created_at == Date.parse('2012-03-25 09:54:09 UTC')
   end
 
   def test_it_finds_all_invoices_by_created_at
@@ -114,13 +114,13 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def test_it_finds_invoices_by_updated_at
     invoice = Invoice.find_by_updated_at('2012-03-25 09:54:09 UTC')
     assert invoice != nil
-    assert invoice.updated_at == '2012-03-25 09:54:09 UTC'
+    assert invoice.updated_at == Date.parse('2012-03-25 09:54:09 UTC')
   end
 
   def test_it_finds_all_invoices_by_updated_at
     invoices = Invoice.find_all_by_updated_at('2012-03-25 09:54:09 UTC')
     assert invoices.count == 2
-    assert invoices.each { |invoice| invoice.updated_at == '2012-03-25 09:54:09 UTC' }
+    assert invoices.each { |invoice| invoice.updated_at == Date.parse('2012-03-25 09:54:09 UTC') }
   end
 
   def test_it_finds_invoices_transactions

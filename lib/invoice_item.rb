@@ -108,14 +108,14 @@ class InvoiceItem
     Item.find_by_id(item_id)
   end
 
-  def self.successfully_sold_invoice_items(successful_transactions)
+  def self.get_sold_invoice_items(successful_transactions)
     successful_transactions.map do |transaction|
       InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)
     end.flatten
   end
 
-  def self.gather_invoice_items_from_successful_transactions(successful_transactions)
-    invoice_items = successfully_sold_invoice_items(successful_transactions)
+  def self.get_invoice_revenue(successful_transactions)
+    invoice_items = get_sold_invoice_items(successful_transactions)
 
     invoice_totals = Hash.new(0)
     invoice_items.each do |invoice_item|
@@ -123,6 +123,19 @@ class InvoiceItem
         #value = BigDecimal.new(value)
         key = invoice_item.invoice_id
         invoice_totals[key] += value
+    end
+    invoice_totals
+  end
+
+  def self.get_invoice_quantity(successful_transactions)
+    invoice_items = get_sold_invoice_items(successful_transactions)
+
+    invoice_totals = Hash.new(0)
+    invoice_items.each do |invoice_item|
+      value = invoice_item.quantity
+      #value = BigDecimal.new(value)
+      key = invoice_item.invoice_id
+      invoice_totals[key] += value
     end
     invoice_totals
   end

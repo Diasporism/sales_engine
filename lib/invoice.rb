@@ -6,8 +6,8 @@ class Invoice
     @customer_id = row[:customer_id].to_i
     @merchant_id = row[:merchant_id].to_i
     @status = row[:status].to_s
-    @created_at = row[:created_at].to_s
-    @updated_at = row[:updated_at].to_s
+    @created_at = Date.parse(row[:created_at])
+    @updated_at = Date.parse(row[:updated_at])
   end
 
   def self.build_invoice(contents)
@@ -69,21 +69,21 @@ class Invoice
   ############################ Created_At
 
   def self.find_by_created_at(date)
-    @@invoices.find { |invoice| invoice.created_at.downcase == date.downcase}
+    @@invoices.find { |invoice| invoice.created_at == Date.parse(date)}
   end
 
   def self.find_all_by_created_at(date)
-    @@invoices.select { |invoice| invoice.created_at.downcase == date.downcase}
+    @@invoices.select { |invoice| invoice.created_at == Date.parse(date)}
   end
 
   ############################ Updated_At
 
   def self.find_by_updated_at(date)
-    @@invoices.find { |invoice| invoice.updated_at.downcase == date.downcase}
+    @@invoices.find { |invoice| invoice.updated_at == Date.parse(date)}
   end
 
   def self.find_all_by_updated_at(date)
-    @@invoices.select { |invoice| invoice.updated_at.downcase == date.downcase}
+    @@invoices.select { |invoice| invoice.updated_at == Date.parse(date)}
   end
 
   def transactions
@@ -108,5 +108,21 @@ class Invoice
 
   def customer
     Customer.find_by_id(customer_id)
+  end
+
+  def format_dates(invoices)
+    invoices.each do |invoice|
+      Date.parse(invoice.created_at)
+    end
+  end
+
+  def self.sum_revenue_by_date(invoice_totals)
+    revenues = Hash.new(0)
+    invoice_totals.each_pair do |k, v|
+      invoice = Invoice.find_by_id(k)
+      key = invoice.created_at
+      revenues[key] += v
+    end
+    revenues.sort_by { |k,v| v }.reverse
   end
 end

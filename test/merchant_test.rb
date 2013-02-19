@@ -118,10 +118,52 @@ class MerchantTest < MiniTest::Unit::TestCase
     merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
     Merchant.build_merchant(merchant_contents)
 
-    ranked = Merchant.most_revenue(3)
-    assert_equal 3, ranked.count
-    assert_equal 'Dicki-Bednar', ranked[0].name
-    assert_equal "Kassulke, O'Hara and Quitzon", ranked[1].name
-    assert_equal "Okuneva, Prohaska and Rolfson", ranked[2].name
+    ranked_by_revenue = Merchant.most_revenue(3)
+    assert_equal 3, ranked_by_revenue.count
+    assert_equal 'Dicki-Bednar', ranked_by_revenue[0].name
+    assert_equal "Kassulke, O'Hara and Quitzon", ranked_by_revenue[1].name
+    assert_equal "Okuneva, Prohaska and Rolfson", ranked_by_revenue[2].name
+  end
+
+  def test_it_returns_top_merchants_by_item
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
+
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
+
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
+
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(transaction_contents)
+
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    ranked_by_items = Merchant.most_items(5)
+    assert_equal 5, ranked_by_items.count
+    assert_equal "Kassulke, O'Hara and Quitzon", ranked_by_items[0].name
+    assert_equal 'Daugherty Group', ranked_by_items[4].name
+  end
+
+  def test_it_returns_revenue_by_date
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
+
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
+
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
+
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(transaction_contents)
+
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    revenue_for_date = Merchant.revenue('Tue, 20 Mar 2012')
+    assert revenue_for_date != nil
   end
 end
