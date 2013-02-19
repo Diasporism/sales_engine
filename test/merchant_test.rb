@@ -120,5 +120,8 @@ class MerchantTest < MiniTest::Unit::TestCase
 
     ranked = Merchant.most_revenue(3)
     assert_equal 3, ranked.count
+    assert_equal 'Dicki-Bednar', ranked[0].name
+    assert_equal "Kassulke, O'Hara and Quitzon", ranked[1].name
+    assert_equal "Okuneva, Prohaska and Rolfson", ranked[2].name
   end
 end

@@ -108,24 +108,22 @@ class InvoiceItem
     Item.find_by_id(item_id)
   end
 
-  def self.gather_invoice_items_from_successful_transactions(successful_transactions)
-    invoice_items = []
-    successful_transactions.each do |transaction|
-      invoice_items << InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)
-    end
-    invoice_items.flatten!
-    sum_invoice_items_for_each_invoice(invoice_items)
+  def self.successfully_sold_invoice_items(successful_transactions)
+    successful_transactions.map do |transaction|
+      InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)
+    end.flatten
   end
 
-  def self.sum_invoice_items_for_each_invoice(invoice_items)
+  def self.gather_invoice_items_from_successful_transactions(successful_transactions)
+    invoice_items = successfully_sold_invoice_items(successful_transactions)
+
     invoice_totals = Hash.new(0)
     invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
-        value = BigDecimal.new(value)
-        value = value.truncate(2)
+        #value = BigDecimal.new(value)
         key = invoice_item.invoice_id
         invoice_totals[key] += value
     end
-    Merchant.sum_invoice_revenue_by_merchant_id(invoice_totals)
+    invoice_totals
   end
 end

@@ -79,11 +79,9 @@ class Merchant
   end
 
   def self.most_revenue(rank)
-    if rank == 0
-      rank = 1
-    end
-    Transaction.get_successful_transaction
-    @merchant_revenues_array[0..(rank - 1)]
+    rank = 1 if rank == 0
+    Merchant.sum_invoice_revenue_by_merchant_id(InvoiceItem.gather_invoice_items_from_successful_transactions(Transaction.get_successful_transaction))
+    @merchant_revenues_array[0..(rank - 1)].map { |item| Merchant.find_by_id(item[0]) }
   end
 
   def self.sum_invoice_revenue_by_merchant_id(invoice_totals)
@@ -94,6 +92,5 @@ class Merchant
       merchant_revenues[key] += v
     end
     @merchant_revenues_array = merchant_revenues.sort_by { |k,v| v }.reverse
-    puts @merchant_revenues_array
   end
 end
