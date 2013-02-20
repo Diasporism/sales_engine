@@ -189,4 +189,60 @@ class MerchantTest < MiniTest::Unit::TestCase
     merchant = Merchant.find_by_name('Willms and Sons')
     assert_equal 837329, merchant.revenue('Fri, 09 Mar 2012')
   end
+
+  def test_it_returns_favorite_customers
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
+
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
+
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
+
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(transaction_contents)
+
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    merchant = Merchant.find_by_name("Terry-Moore")
+    customer = Merchant.favorite_customer
+
+    assert_equal 6, customer.count
+
+  end 
+
+  def test_it_returns_customers_with_pending_transactions 
+
+    customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+    Customer.build_customer(customer_contents)
+
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
+
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
+
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
+
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(transaction_contents)
+
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    merchant_name = Merchant.find_by_name("Parisian Group")
+    customer = merchant_name.customers_with_pending_transactions
+
+    assert_equal 4, customer.count
+
+  end 
+    
+
 end
+
+
+
+

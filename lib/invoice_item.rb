@@ -108,6 +108,20 @@ class InvoiceItem
     Item.find_by_id(item_id)
   end
 
+  def self.get_item_revenue(successful_transactions)
+    invoice_items = get_sold_invoice_items(successful_transactions)
+
+    item_totals = Hash.new(0)
+    invoice_items.each do |invoice_item|
+      value = (invoice_item.quantity * invoice_item.unit_price)
+      #value = BigDecimal.new(value)
+      key = invoice_item.item_id
+      item_totals[key] += value
+    end
+    item_totals
+    #might need to rank this
+  end
+
   def self.get_sold_invoice_items(successful_transactions)
     successful_transactions.map do |transaction|
       InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)

@@ -128,4 +128,16 @@ class Merchant
     end
     merchant_revenues.sort_by { |k,v| v }.reverse
   end
+
+
+  def customers_with_pending_transactions
+    Customer.return_customers_for_invoices(Invoice.find_transactions_for_pending_invoices(Invoice.find_all_by_merchant_id(id)))
+  end 
+
+
 end
+
+
+
+
+

@@ -154,6 +154,27 @@ class ItemTest < MiniTest::Unit::TestCase
     merchants = item.merchant
     assert_equal 1, merchants.id
   end
+
+  def test_it_returns_top_items_by_revenue
+    invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+    Invoice.build_invoice(invoice_contents)
+
+    invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+    InvoiceItem.build_invoice_item(invoice_item_contents)
+
+    item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+    Item.build_item(item_contents)
+
+    transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+    Transaction.build_transaction(transaction_contents)
+
+    merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+    Merchant.build_merchant(merchant_contents)
+
+    ranked_by_revenue = Item.most_revenue(1)
+    assert_equal 'Item Dicta Autem', ranked_by_revenue[0].name
+  end
+
 end
 
 

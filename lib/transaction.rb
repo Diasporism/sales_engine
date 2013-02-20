@@ -104,4 +104,10 @@ class Transaction
     transactions.each { |transaction| invoices << Invoice.find_by_id(transaction.invoice_id) }
     invoices
   end
+
+    def self.get_pending_transaction
+    pending_transactions = @@transactions.select { |transaction| transaction.result == '' }
+    puts pending_transactions
+    pending_transactions
+  end
 end

@@ -133,4 +133,20 @@ class Invoice
   def self.get_invoices_by_date(date, invoices)
     invoices.select { |invoice| invoice if invoice.created_at == date}
   end
+
+  def self.find_transactions_for_pending_invoices(invoices)
+    pending_invoices = []
+    invoices.each do |invoice|
+      transactions = Transaction.find_all_by_invoice_id(invoice.id)
+      if transactions.none? { |transaction| transaction.result == "success"}
+          pending_invoices << invoice
+      end 
+    end
+    pending_invoices
+  end 
+
+
 end
+
+
+

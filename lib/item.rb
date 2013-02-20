@@ -104,4 +104,19 @@ class Item
   def merchant
     Merchant.find_by_id(id)
   end
+
+  def self.rank(array, rank)
+    array[0..(rank - 1)].map { |item| Item.find_by_id(item[0]) }
+  end
+
+  def self.most_revenue(rank)
+    rank = 1 if rank == 0
+    items_rank = InvoiceItem.get_item_revenue(Transaction.get_successful_transaction)
+    items_rank = items_rank.sort_by {|k, v| v }.reverse
+    rank(items_rank, rank)
+  end
+
 end
+
+
+
