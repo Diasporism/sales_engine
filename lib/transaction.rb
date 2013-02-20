@@ -98,4 +98,15 @@ class Transaction
   def self.get_successful_transaction
     @@transactions.select { |transaction| transaction.result == 'success' }
   end
+
+  def self.get_invoices_from_transaction(transactions)
+    #transactions.each do |transaction|
+    #  key = Invoice.find_by_id(transaction.invoice_id)
+    #  value = Merchant.find_by_id(key.merchant_id)
+    #  transinvoices[key] = value
+    #end
+    invoices = []
+    transactions.each { |transaction| invoices << Invoice.find_by_id(transaction.invoice_id) }
+    invoices
+  end
 end

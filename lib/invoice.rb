@@ -125,4 +125,12 @@ class Invoice
     end
     revenues.sort_by { |k,v| v }.reverse
   end
+
+  def self.get_invoices_by_merchant(id, invoices)
+    invoices.select { |invoice| invoice if invoice.merchant_id == id}
+  end
+
+  def self.get_invoices_by_date(date, invoices)
+    invoices.select { |invoice| invoice if invoice.created_at == date}
+  end
 end

@@ -100,7 +100,25 @@ class Merchant
     array.select { |item| item[0] == date }
   end
 
+  def revenue(date=nil)
+    if date == nil
+      InvoiceItem.sum_revenue(Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction)))
+    else
+      InvoiceItem.sum_revenue(Invoice.get_invoices_by_date(date, Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction))))
+    end
+  end
+
   def self.sum_value_by_merchant_id(invoice_totals)
+    merchant_revenues = Hash.new(0)
+    invoice_totals.each_pair do |k, v|
+      invoice = Invoice.find_by_id(k)
+      key = invoice.merchant_id
+      merchant_revenues[key] += v
+    end
+    merchant_revenues.sort_by { |k,v| v }.reverse
+  end
+
+  def self.sum_value_by_merchant_id_for_date(invoice_totals)
     merchant_revenues = Hash.new(0)
     invoice_totals.each_pair do |k, v|
       invoice = Invoice.find_by_id(k)

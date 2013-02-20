@@ -119,12 +119,41 @@ class InvoiceItem
 
     invoice_totals = Hash.new(0)
     invoice_items.each do |invoice_item|
-        value = (invoice_item.quantity * invoice_item.unit_price)
-        #value = BigDecimal.new(value)
-        key = invoice_item.invoice_id
-        invoice_totals[key] += value
+      value = (invoice_item.quantity * invoice_item.unit_price)
+      #value = BigDecimal.new(value)
+      key = invoice_item.invoice_id
+      invoice_totals[key] += value
     end
     invoice_totals
+  end
+
+  def self.get_invoice_items_for_invoices(invoices)
+    invoice_items = []
+    invoices.each { |invoice| invoice_items << InvoiceItem.find_all_by_invoice_id(invoice.id) }
+    invoice_items.flatten
+  end
+
+  def self.sum_revenue(invoices)
+    invoice_items = get_invoice_items_for_invoices(invoices)
+    revenues = []
+    invoice_items.each { |invoice_item| revenues << (invoice_item.quantity * invoice_item.unit_price) }
+    revenues.inject(:+)
+  end
+
+  def self.get_invoice_revenue_by_date(successful_transactions)
+    invoice_items = get_sold_invoice_items(successful_transactions)
+    invoice_totals_by_date = Hash.new(0)
+
+    invoice_items.each do |invoice_item|
+      value = (invoice_item.quantity * invoice_item.unit_price)
+      puts value
+      #value = BigDecimal.new(value)
+      key = Invoice.find_by_id(invoice_item.invoice_id).created_at
+      puts key
+      invoice_totals_by_date[key] += value
+    end
+    puts invoice_totals_by_date
+    invoice_totals_by_date
   end
 
   def self.get_invoice_quantity(successful_transactions)
