@@ -4,4 +4,4 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 
-require './sales_engine'
+require './lib/sales_engine'
