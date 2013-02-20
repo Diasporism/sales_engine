@@ -127,6 +127,20 @@ module SalesEngine
       revenues.sort_by { |k,v| v }.reverse
     end
 
+    def self.sum_by_customer_id(invoices)
+      transactions_by_customer = Hash.new(0)
+
+      invoices.each do |invoice|
+        key = invoice.customer_id
+        if transactions_by_customer[key]
+          transactions_by_customer[key] += 1
+        else
+          transactions_by_customer[key] = 1
+        end
+      end
+      transactions_by_customer.sort_by { |k,v| v }.reverse
+    end
+
     def self.get_invoices_by_merchant(id, invoices)
       invoices.select { |invoice| invoice if invoice.merchant_id == id}
     end

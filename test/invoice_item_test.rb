@@ -165,7 +165,7 @@ module SalesEngine
       assert_equal 1, item.id
       assert_equal 'Item Qui Esse', item.name
       assert_equal 'Nihil autem sit odio inventore deleniti. Est laudantium ratione distinctio laborum. Minus voluptatem nesciunt assumenda dicta voluptatum porro.', item.description
-      assert_equal 75107, item.unit_price
+      assert_equal BigDecimal.new('751.07'), item.unit_price
       assert_equal 1, item.merchant_id
       assert_equal '2012-03-27 01:53:59 UTC', item.created_at
       assert_equal '2012-03-27 01:53:59 UTC', item.updated_at

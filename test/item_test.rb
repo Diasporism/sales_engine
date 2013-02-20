@@ -22,7 +22,7 @@ module SalesEngine
       assert_equal 1, item.id
       assert_equal 'Bob', item.name
       assert_equal 'description', item.description
-      assert_equal 2, item.unit_price
+      assert_equal 0.02, item.unit_price
       assert_equal 3, item.merchant_id
       assert_equal '2012-03-27 14:53:59 UTC', item.created_at
       assert_equal '2012-03-27 14:53:59 UTC', item.updated_at
@@ -84,15 +84,15 @@ module SalesEngine
     ############################ Unit_Price
 
     def test_it_finds_by_unit_price
-      item = Item.find_by_unit_price(32301)
+      item = Item.find_by_unit_price(BigDecimal.new('323.01'))
       assert item != nil
-      assert_equal 32301, item.unit_price
+      assert_equal BigDecimal.new('323.01'), item.unit_price
     end
 
     def test_it_finds_all_by_unit_price
-      items = Item.find_all_by_unit_price(32301)
+      items = Item.find_all_by_unit_price(BigDecimal.new('323.01'))
       assert_equal 2, items.count
-      assert items.each { |item| item.unit_price == 32301 }
+      assert items.each { |item| item.unit_price == BigDecimal.new('323.01') }
     end
 
     ############################ Merchant_ID

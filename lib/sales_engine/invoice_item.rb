@@ -8,8 +8,10 @@ module SalesEngine
       @id = row[:id].to_i
       @item_id = row[:item_id].to_i
       @invoice_id = row[:invoice_id].to_i
-      @quantity = row[:quantity].to_i
-      @unit_price = row[:unit_price].to_i
+      quantity = row[:quantity].to_i
+      @quantity = BigDecimal.new(quantity.to_s)
+      unit_price = row[:unit_price].to_i.round(3) / 100
+      @unit_price = BigDecimal.new(unit_price.to_s)
       @created_at = row[:created_at]
       @updated_at = row[:updated_at]
     end
@@ -120,7 +122,7 @@ module SalesEngine
       invoice_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
-        #value = BigDecimal.new(value)
+        value = BigDecimal.new(value)
         key = invoice_item.invoice_id
         invoice_totals[key] += value
       end
@@ -146,8 +148,7 @@ module SalesEngine
 
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
-        puts value
-        #value = BigDecimal.new(value)
+        value = BigDecimal.new(value)
         key = Invoice.find_by_id(invoice_item.invoice_id).created_at
         puts key
         invoice_totals_by_date[key] += value
@@ -162,7 +163,7 @@ module SalesEngine
       invoice_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = invoice_item.quantity
-        #value = BigDecimal.new(value)
+        value = BigDecimal.new(value)
         key = invoice_item.invoice_id
         invoice_totals[key] += value
       end

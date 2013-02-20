@@ -207,10 +207,8 @@ module SalesEngine
       Merchant.build_merchant(merchant_contents)
 
       merchant = Merchant.find_by_name("Terry-Moore")
-      customer = merchant.favorite_customer
-
-      assert_equal 6, customer.count
-
+      customer = Customer.find_by_id(300)
+      assert_equal customer, merchant.favorite_customer
     end 
 
     def test_it_returns_customers_with_pending_transactions 

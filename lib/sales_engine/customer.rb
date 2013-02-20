@@ -79,12 +79,11 @@ module SalesEngine
     def invoices
       Invoice.find_all_by_customer_id(id)
     end
-  end
 
     def self.return_customers_for_invoices(invoices)
-    customers = []
-    invoices.each { |invoice| customers << Customer.find_by_id(invoice.customer_id)}
-    customers.flatten 
-  end 
-
+      customers = []
+      invoices.each { |invoice| customers << Customer.find_by_id(invoice.customer_id)}
+      customers.flatten
+    end
+  end
 end

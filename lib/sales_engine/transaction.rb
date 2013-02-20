@@ -5,7 +5,7 @@ module SalesEngine
     def initialize(row)
       @id = row[:id].to_i
       @invoice_id = row[:invoice_id].to_i
-      @credit_card_number = row[:credit_card_number].to_i
+      @credit_card_number = row[:credit_card_number].to_s
       @credit_card_expiration_date = row[:credit_card_expiration_date].to_s
       @result = row[:result].to_s
       @created_at = row[:created_at].to_s

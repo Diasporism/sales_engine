@@ -1,5 +1,3 @@
-#require 'invoice'
-
 module SalesEngine
   class Merchant
     attr_reader :id, :name, :created_at, :updated_at
@@ -96,18 +94,25 @@ module SalesEngine
     end
 
     def self.revenue(date)
-      date = Date.parse(date)
+      #date = Date.parse(date)
       array = Invoice.sum_revenue_by_date(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
-      array.select { |item| item[0] == date }
+      answer = array.select { |item| item[0] == date }.flatten
+      answer[1]
     end
 
     def revenue(date=nil)
       if date == nil
         InvoiceItem.sum_revenue(Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction)))
       else
-        date = Date.parse(date)
+        #date = Date.parse(date)
         InvoiceItem.sum_revenue(Invoice.get_invoices_by_date(date, Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction))))
       end
+    end
+
+    def favorite_customer
+      ranked_invoices = Invoice.sum_by_customer_id(Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction)))
+      favorite_customer_id = ranked_invoices[0]
+      Customer.find_by_id(favorite_customer_id[0])
     end
 
     def self.sum_value_by_merchant_id(invoice_totals)
@@ -129,9 +134,9 @@ module SalesEngine
       end
       merchant_revenues.sort_by { |k,v| v }.reverse
     end
-  end
 
-  def customers_with_pending_transactions
-    Customer.return_customers_for_invoices(Invoice.find_transactions_for_pending_invoices(Invoice.find_all_by_merchant_id(id)))
-  end 
+    def customers_with_pending_invoices
+      Customer.return_customers_for_invoices(Invoice.find_transactions_for_pending_invoices(Invoice.find_all_by_merchant_id(id)))
+    end
+  end
 end

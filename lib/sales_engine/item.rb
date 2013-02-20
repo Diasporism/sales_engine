@@ -6,7 +6,8 @@ module SalesEngine
       @id = row[:id].to_i
       @name = row[:name].to_s
       @description = row[:description].to_s
-      @unit_price = row[:unit_price].to_i
+      unit_price = row[:unit_price].to_i.round(3) / 100
+      @unit_price = BigDecimal.new(unit_price.to_s)
       @merchant_id = row[:merchant_id].to_i
       @created_at = row[:created_at].to_s
       @updated_at = row[:updated_at].to_s
@@ -103,7 +104,7 @@ module SalesEngine
     end
 
     def merchant
-      Merchant.find_by_id(id)
+      Merchant.find_by_id(merchant_id)
     end
 
     def self.rank(array, rank)

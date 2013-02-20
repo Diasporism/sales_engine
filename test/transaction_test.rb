@@ -22,7 +22,7 @@ module SalesEngine
 
       assert_equal 1, transaction.id
       assert_equal 2, transaction.invoice_id
-      assert_equal 4654405418249632, transaction.credit_card_number
+      assert_equal '4654405418249632', transaction.credit_card_number
       assert_equal '', transaction.credit_card_expiration_date
       assert_equal 'success', transaction.result
       assert_equal '2012-03-27 14:53:59 UTC', transaction.created_at
@@ -67,15 +67,15 @@ module SalesEngine
     ############################ Credit_Card_Number
 
     def test_it_finds_transactions_by_credit_card_number
-      transaction = Transaction.find_by_credit_card_number(4654405418249632)
+      transaction = Transaction.find_by_credit_card_number('4654405418249632')
       assert transaction != nil
-      assert transaction.credit_card_number == 4654405418249632
+      assert_equal '4654405418249632', transaction.credit_card_number
     end
 
     def test_it_finds_all_transactions_by_credit_card_number
-      transactions = Transaction.find_all_by_credit_card_number(4654405418249632)
+      transactions = Transaction.find_all_by_credit_card_number('4654405418249632')
       assert transactions.count == 3
-      assert transactions.each { |transaction| transaction.credit_card_number == 4654405418249632 }
+      assert transactions.each { |transaction| transaction.credit_card_number == '4654405418249632' }
     end
 
     ############################ Result
