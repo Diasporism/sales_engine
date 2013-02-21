@@ -1,7 +1,8 @@
 module SalesEngine
   class Transaction
-    attr_reader :id, :invoice_id, :credit_card_number, 
-    :credit_card_expiration_date, :result, :created_at, :updated_at
+    attr_reader :id, :invoice_id, :credit_card_number,
+                :credit_card_expiration_date, :result,
+                :created_at, :updated_at
 
     def initialize(row)
       @id = row[:id].to_i
@@ -19,10 +20,8 @@ module SalesEngine
 
     def self.build_transaction(contents)
       @@transactions = []
-      contents.each do |row|
-        @@transactions << Transaction.new(row)
-      end
-      @@transactions.count
+      contents.each {|row| @@transactions << Transaction.new(row)}
+      count
     end
 
     def self.clear
@@ -33,66 +32,52 @@ module SalesEngine
       @@transactions.sample
     end
 
-    ############################ ID
-
     def self.find_by_id(id)
-      @@transactions.find { |transaction| transaction.id == id}
+      @@transactions.find {|t| t.id == id}
     end
 
     def self.find_all_by_id(id)
-      @@transactions.select { |transaction| transaction.id == id}
+      @@transactions.select {|t| t.id == id}
     end
 
-    ############################ Invoice_ID
-
     def self.find_by_invoice_id(id)
-      @@transactions.find { |transaction| transaction.invoice_id == id}
+      @@transactions.find {|t| t.invoice_id == id}
     end
 
     def self.find_all_by_invoice_id(id)
-      @@transactions.select { |transaction| transaction.invoice_id == id}
+      @@transactions.select {|t| t.invoice_id == id}
     end
 
-    ############################ Credit_Card_Number
-
     def self.find_by_credit_card_number(number)
-      @@transactions.find do
-       |transaction| transaction.credit_card_number == number
-     end
+      @@transactions.find {|t| t.credit_card_number == number}
     end
 
     def self.find_all_by_credit_card_number(number)
-      @@transactions.select { |transaction| transaction.credit_card_number == number}
+      @@transactions.select {|t| t.credit_card_number == number}
     end
 
-    ############################ Result
-
     def self.find_by_result(result)
-      @@transactions.find { |transaction| transaction.result.downcase == result.downcase}
+      @@transactions.find {|t| t.result.downcase == result.downcase}
     end
 
     def self.find_all_by_result(result)
-      @@transactions.select { |transaction| transaction.result.downcase == result.downcase}
+      @@transactions.select {|t| t.result.downcase == result.downcase}
     end
 
-    ############################ Created_At
-
     def self.find_by_created_at(date)
-      @@transactions.find { |transaction| transaction.created_at.downcase == date.downcase}
+      @@transactions.find {|t| t.created_at.downcase == date.downcase}
     end
 
     def self.find_all_by_created_at(date)
-      @@transactions.select { |transaction| transaction.created_at.downcase == date.downcase}
+      @@transactions.select {|t| t.created_at.downcase == date.downcase}
     end
 
-    ############################ Updated_At
-
     def self.find_by_updated_at(date)
-      @@transactions.find { |transaction| transaction.updated_at.downcase == date.downcase}
+      @@transactions.find {|t| t.updated_at.downcase == date.downcase}
     end
 
     def self.find_all_by_updated_at(date)
-      @@transactions.select { |transaction| transaction.updated_at.downcase == date.downcase}
+      @@transactions.select {|t| t.updated_at.downcase == date.downcase}
     end
 
     def self.transactions
@@ -104,18 +89,17 @@ module SalesEngine
     end
 
     def self.get_successful_transaction
-      @@transactions.select { |transaction| transaction.result == 'success' }
+      @@transactions.select {|t| t.result == 'success'}
     end
 
     def self.get_invoices_from_transaction(transactions)
       invoices = []
-      transactions.each { |transaction| invoices << Invoice.find_by_id(transaction.invoice_id) }
+      transactions.each {|t| invoices << Invoice.find_by_id(t.invoice_id)}
       invoices
     end
 
     def self.get_pending_transaction
-      pending_transactions = @@transactions.select { |transaction| transaction.result == '' }
-      pending_transactions
+      @@transactions.select {|t| t.result == ''}
     end
 
     def self.charge(input, invoice_id)
@@ -133,10 +117,8 @@ module SalesEngine
 
     def self.return_transactions(invoices)
       transactions = []
-      invoices.each do |invoice|
-        transactions << Transaction.find_all_by_invoice_id(invoice.id)
-      end.flatten!
-    transactions
-    end 
+      invoices.each {|i| transactions << find_all_by_invoice_id(i.id)}.flatten!
+      transactions
+    end
   end
 end
