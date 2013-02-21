@@ -104,7 +104,6 @@ module SalesEngine
       if date == nil
         InvoiceItem.sum_revenue(Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction)))
       else
-        #date = Date.parse(date)
         InvoiceItem.sum_revenue(Invoice.get_invoices_by_date(date, Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction))))
       end
     end

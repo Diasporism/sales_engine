@@ -39,41 +39,49 @@ module SalesEngine
     ############################ First_Name
 
     def self.find_by_first_name(name)
-      @@customer.find { |customer| customer.first_name.downcase == name.downcase}
+      @@customer.find {|customer| customer.first_name.downcase == name.downcase}
     end
 
     def self.find_all_by_first_name(name)
-      @@customer.select { |customer| customer.first_name.downcase == name.downcase}
+      @@customer.select do 
+        |customer| customer.first_name.downcase == name.downcase
+      end
     end
 
     ############################ Last_Name
 
     def self.find_by_last_name(name)
-      @@customer.find { |customer| customer.last_name.downcase == name.downcase}
+      @@customer.find {|customer| customer.last_name.downcase == name.downcase}
     end
 
     def self.find_all_by_last_name(name)
-      @@customer.select { |customer| customer.last_name.downcase == name.downcase}
+      @@customer.select do 
+        |customer| customer.last_name.downcase == name.downcase
+      end
     end
 
     ############################ Created_At
 
     def self.find_by_created_at(date)
-      @@customer.find { |customer| customer.created_at.downcase == date.downcase}
+      @@customer.find {|customer| customer.created_at.downcase == date.downcase}
     end
 
     def self.find_all_by_created_at(date)
-      @@customer.select { |customer| customer.created_at.downcase == date.downcase}
+      @@customer.select do 
+        |customer| customer.created_at.downcase == date.downcase
+      end
     end
 
     ############################ Updated_At
 
     def self.find_by_updated_at(date)
-      @@customer.find { |customer| customer.updated_at.downcase == date.downcase}
+      @@customer.find {|customer| customer.updated_at.downcase == date.downcase}
     end
 
     def self.find_all_by_updated_at(date)
-      @@customer.select { |customer| customer.updated_at.downcase == date.downcase}
+      @@customer.select do
+       |customer| customer.updated_at.downcase == date.downcase
+     end
     end
 
     def invoices
@@ -82,12 +90,15 @@ module SalesEngine
 
     def self.return_customers_for_invoices(invoices)
       customers = []
-      invoices.each { |invoice| customers << Customer.find_by_id(invoice.customer_id)}
+      invoices.each do
+       |invoice| customers << Customer.find_by_id(invoice.customer_id)
+     end
       customers.flatten
     end
 
     def transactions
       invoices = Invoice.find_all_by_customer_id(id)
+
       Transaction.return_transactions(invoices)
     end 
 

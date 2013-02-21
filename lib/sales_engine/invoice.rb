@@ -1,6 +1,7 @@
 module SalesEngine
   class Invoice
-    attr_reader :id, :customer_id, :merchant_id, :status, :created_at, :updated_at
+    attr_reader :id, :customer_id, :merchant_id, :status, 
+                :created_at, :updated_at
 
     def initialize(row)
       @id = row[:id].to_i
@@ -105,13 +106,10 @@ module SalesEngine
 
     def items
       invoice_item = InvoiceItem.find_all_by_invoice_id(id)
-
       item_id = []
       invoice_item.each { |item| item_id << item.item_id }
-
       item_list = []
       item_id.each { |id| item_list << Item.find_by_id(id) }
-
       item_list
     end
 
@@ -133,7 +131,6 @@ module SalesEngine
 
     def self.sum_by_customer_id(invoices)
       transactions_by_customer = Hash.new(0)
-
       invoices.each do |invoice|
         key = invoice.customer_id
         if transactions_by_customer[key]
