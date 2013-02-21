@@ -31,6 +31,9 @@ module SalesEngine
     end
 
     def test_it_returns_random_item
+      contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+      Item.build_item(contents)
+
       item_one = Item.random
       item_two = Item.random
       item_three = Item.random
@@ -157,66 +160,66 @@ module SalesEngine
       assert_equal 1, merchants.id
     end
 
-    # def test_it_returns_top_items_by_revenue
-    #   invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
-    #   Invoice.build_invoice(invoice_contents)
+    def test_it_returns_top_items_by_revenue
+       invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+       Invoice.build_invoice(invoice_contents)
 
-    #   invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
-    #   InvoiceItem.build_invoice_item(invoice_item_contents)
+       invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+       InvoiceItem.build_invoice_item(invoice_item_contents)
 
-    #   item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
-    #   Item.build_item(item_contents)
+       item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+       Item.build_item(item_contents)
 
-    #   transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
-    #   Transaction.build_transaction(transaction_contents)
+       transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+       Transaction.build_transaction(transaction_contents)
 
-    #   merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
-    #   Merchant.build_merchant(merchant_contents)
+       merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+       Merchant.build_merchant(merchant_contents)
 
-    #   ranked_by_revenue = Item.most_revenue(1)
-    #   assert_equal 'Item Dicta Autem', ranked_by_revenue[0].name
-    # end
+       ranked_by_revenue = Item.most_revenue(1)
+       assert_equal 'Item Dicta Autem', ranked_by_revenue[0].name
+    end
 
-    # def test_it_returns_revenue_by_date
-    #   invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
-    #   Invoice.build_invoice(invoice_contents)
+    def test_it_returns_revenue_by_date
+       invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+       Invoice.build_invoice(invoice_contents)
 
-    #   invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
-    #   InvoiceItem.build_invoice_item(invoice_item_contents)
+       invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+       InvoiceItem.build_invoice_item(invoice_item_contents)
 
-    #   item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
-    #   Item.build_item(item_contents)
+       item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+       Item.build_item(item_contents)
 
-    #   transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
-    #   Transaction.build_transaction(transaction_contents)
+       transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+       Transaction.build_transaction(transaction_contents)
 
-    #   merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
-    #   Merchant.build_merchant(merchant_contents)
+       merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+       Merchant.build_merchant(merchant_contents)
 
-    #   items_by_quantity = Item.most_items(37)
-    #   assert_equal 'Item Nam Magnam', items_by_quantity[1].name
-    #   assert_equal 'Item Ut Quaerat', items_by_quantity[-1].name
-    # end
+       items_by_quantity = Item.most_items(37)
+       assert_equal 'Item Nam Magnam', items_by_quantity[1].name
+       assert_equal 'Item Ut Quaerat', items_by_quantity[-1].name
+    end
 
-    # def test_it_returns_total_revenue_for_item_by_best_date
-    #   invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
-    #   Invoice.build_invoice(invoice_contents)
+    def test_it_returns_total_revenue_for_item_by_best_date
+       invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+       Invoice.build_invoice(invoice_contents)
 
-    #   invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
-    #   InvoiceItem.build_invoice_item(invoice_item_contents)
+       invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+       InvoiceItem.build_invoice_item(invoice_item_contents)
 
-    #   item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
-    #   Item.build_item(item_contents)
+       item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+       Item.build_item(item_contents)
 
-    #   transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
-    #   Transaction.build_transaction(transaction_contents)
+       transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+       Transaction.build_transaction(transaction_contents)
 
-    #   merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
-    #   Merchant.build_merchant(merchant_contents)
+       merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+       Merchant.build_merchant(merchant_contents)
 
-    #   item = Item.find_by_name('Item Accusamus Ut')
-    #   assert_equal Date.parse('Sat, 24 Mar 2012'), item.best_day
-    # end
+       item = Item.find_by_name('Item Accusamus Ut')
+       assert_equal Date.parse('Sat, 24 Mar 2012'), item.best_day
+    end
   end
 end
 

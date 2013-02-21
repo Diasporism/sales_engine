@@ -29,6 +29,9 @@ module SalesEngine
     end
 
     def test_it_returns_random_customer
+      contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+      Customer.build_customer(contents)
+
       customer_one = Customer.random
       customer_two = Customer.random
       customer_three = Customer.random

@@ -33,6 +33,9 @@ module SalesEngine
     end
 
     def test_it_returns_random_invoice_items
+      contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+      InvoiceItem.build_invoice_item(contents)
+
       invoice_item_one = InvoiceItem.random
       invoice_item_two = InvoiceItem.random
       invoice_item_three = InvoiceItem.random
@@ -42,7 +45,6 @@ module SalesEngine
       assert invoice_item_three != nil
       assert invoice_item_one != invoice_item_two || invoice_item_one != invoice_item_three || invoice_item_one != invoice_item_four
     end
-
 
     ############################ ID
 

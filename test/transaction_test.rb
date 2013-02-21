@@ -30,6 +30,9 @@ module SalesEngine
     end
 
     def test_it_returns_random_transaction
+      contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+      Transaction.build_transaction(contents)
+
       transaction_one = Transaction.random
       transaction_two = Transaction.random
       transaction_three = Transaction.random
