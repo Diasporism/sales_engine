@@ -211,21 +211,35 @@ module SalesEngine
 
       item_quantities = Hash.new(0)
       invoice_items.each do |invoice_item|
-        value = (invoice_item.quantity)
+        value = invoice_item.quantity
         key = invoice_item.item_id
         item_quantities[key] += value 
       end
-    end 
-
-    def self.match_items_to_invoice(successful_transactions)
-      invoice_items = get_sold_invoice_items(successful_transactions)
-
-      items_by_invoice_id = Hash.new(0)
-      invoice_items.each do |invoice_item|
-        key = invoice_item.id
-        value = invoice_item.invoice_id
-      end
+      item_quantities
     end
 
+    def self.create(items, invoice_item_id)
+      time = Time.now.getutc.to_s
+      items_count = Hash.new(0)
+      items.each do |item|
+        items_count[item] += 1
+      end
+
+      items.each do |item|
+        quantity = items_count.select { |k, v| k == item}.values
+        quantity = quantity[0].to_i
+
+        invoice_item_template = {:id => @@invoice_items.count + 1,
+                                 :item_id => item.id,
+                                 :invoice_id => invoice_item_id,
+                                 :quantity => quantity,
+                                 :unit_price => item.unit_price,
+                                 :created_at => time,
+                                 :updated_at => time}
+
+        invoice_item = InvoiceItem.new(invoice_item_template)
+        @@invoice_items << invoice_item
+      end
+    end
   end
 end

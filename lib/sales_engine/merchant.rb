@@ -138,5 +138,17 @@ module SalesEngine
     def customers_with_pending_invoices
       Customer.return_customers_for_invoices(Invoice.find_transactions_for_pending_invoices(Invoice.find_all_by_merchant_id(id)))
     end
+
+    #def favorite_customer
+    #  customers.sort_by{|customer| invoices_for(customer).count }.reverse.first
+    #end
+    #
+    #def invoices_for(customer)
+    #  successful_invoices.select{|i| i.customer_id == customer.id}
+    #end
+    #
+    #def successful_invoices
+    #  Invoice.successful_invoices_for_merchant_id(self.id)
+    #end
   end
 end

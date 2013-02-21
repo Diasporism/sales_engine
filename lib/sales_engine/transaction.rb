@@ -12,6 +12,10 @@ module SalesEngine
       @updated_at = row[:updated_at].to_s
     end
 
+    def self.count
+      @@transactions.count
+    end
+
     def self.build_transaction(contents)
       @@transactions = []
       contents.each do |row|
@@ -109,6 +113,19 @@ module SalesEngine
     def self.get_pending_transaction
       pending_transactions = @@transactions.select { |transaction| transaction.result == '' }
       pending_transactions
+    end
+
+    def self.charge(input, invoice_id)
+      time = Time.now.getutc.to_s
+      transaction_template = {:id => Transaction.count,
+                              :invoice_id => invoice_id,
+                              :credit_card_number => input[:credit_card_number],
+                              :credit_card_expiration_date => input[:credit_card_expiration_date],
+                              :result => input[:result],
+                              :created_at => time,
+                              :updated_at => time}
+      transaction = Transaction.new(transaction_template)
+      @@transactions << transaction
     end
   end
 end

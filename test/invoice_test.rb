@@ -167,5 +167,61 @@ module SalesEngine
       assert_equal '2012-03-27 14:54:09 UTC', customer.created_at
       assert_equal '2012-03-27 14:54:09 UTC', customer.updated_at
     end
+
+    def test_it_creates_invoices_from_data
+      invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+      Invoice.build_invoice(invoice_contents)
+
+      invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+      InvoiceItem.build_invoice_item(invoice_item_contents)
+
+      item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+      Item.build_item(item_contents)
+
+      transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+      Transaction.build_transaction(transaction_contents)
+
+      merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+      Merchant.build_merchant(merchant_contents)
+
+      customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+      Customer.build_customer(customer_contents)
+
+      customer = Customer.find_by_id(7)
+      merchant = Merchant.find_by_id(22)
+      items = (1..3).map { Item.random }
+      invoice = Invoice.create(customer: customer, merchant: merchant, items: items)
+
+      assert_equal merchant.id, invoice.merchant_id
+      assert_equal customer.id, invoice.customer.id
+    end
+
+    def test_it_creates_transaction_by_charging_invoice
+      invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+      Invoice.build_invoice(invoice_contents)
+
+      invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+      InvoiceItem.build_invoice_item(invoice_item_contents)
+
+      item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+      Item.build_item(item_contents)
+
+      transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+      Transaction.build_transaction(transaction_contents)
+
+      merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+      Merchant.build_merchant(merchant_contents)
+
+      customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+      Customer.build_customer(customer_contents)
+
+      invoice = SalesEngine::Invoice.find_by_id(100)
+      prior_transaction_count = invoice.transactions.count
+
+      invoice.charge(credit_card_number: '1111222233334444',  credit_card_expiration_date: "10/14", result: "success")
+
+      invoice = SalesEngine::Invoice.find_by_id(invoice.id)
+      assert_equal prior_transaction_count + 1, invoice.transactions.count
+    end
   end
 end

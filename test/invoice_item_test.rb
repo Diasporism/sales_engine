@@ -101,15 +101,15 @@ module SalesEngine
       ############################ Unit Price
 
     def test_it_finds_invoice_items_by_unit_price
-      invoice_item = InvoiceItem.find_by_unit_price(13635)
-      #assert invoice_item != nil
-      #assert_equal BigDecimal.new('136.35'), invoice_item.unit_price
-    end 
+      invoice_item = InvoiceItem.find_by_unit_price(BigDecimal.new('136.35'))
+      assert invoice_item != nil
+      assert invoice_item.unit_price == BigDecimal.new('136.35')
+    end
 
     def test_it_finds_all_invoice_items_by_unit_price
-      invoice_items = InvoiceItem.find_all_by_unit_price(13635)
-      #assert_equal BigDecimal.new('2'), invoice_items.count
-      assert invoice_items.each { |invoice_item| invoice_item == 13635 }
+      invoice_items = InvoiceItem.find_all_by_unit_price(BigDecimal.new('136.35'))
+      assert invoice_items.count == 2
+      assert invoice_items.each { |invoice_item| invoice_item == BigDecimal.new('136.35') }
     end
 
     ############################ Created_At

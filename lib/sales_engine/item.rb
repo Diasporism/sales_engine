@@ -118,10 +118,10 @@ module SalesEngine
       rank(items_rank, rank)
     end
 
-    def self.most_items(x)
+    def self.most_items(rank)
       rank = 1 if rank == 0 
       items_quantity = InvoiceItem.get_item_quantity(Transaction.get_successful_transaction)
-      items_rank = items_rank.sort_by {|k, v| v }.reverse
+      items_rank = items_quantity.sort_by {|k, v| v }.reverse
       rank(items_rank, rank)
     end 
 

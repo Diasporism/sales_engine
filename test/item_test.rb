@@ -191,8 +191,9 @@ module SalesEngine
       merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
       Merchant.build_merchant(merchant_contents)
 
-      items_by_quantity = Item.most_items(1)
-      assert_equal 'Item Nam Magnam', ranked_by_revenue[0].name
+      items_by_quantity = Item.most_items(37)
+      assert_equal 'Item Nam Magnam', items_by_quantity[1].name
+      assert_equal 'Item Ut Quaerat', items_by_quantity[-1].name
     end
 
     def test_it_returns_total_revenue_for_item_by_best_date
@@ -213,7 +214,7 @@ module SalesEngine
 
       item = Item.find_by_name('Item Accusamus Ut')
       assert_equal Date.parse('Sat, 24 Mar 2012'), item.best_day
-    end 
+    end
   end
 end
 

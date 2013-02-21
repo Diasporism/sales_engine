@@ -163,7 +163,7 @@ module SalesEngine
       merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
       Merchant.build_merchant(merchant_contents)
 
-      revenue_for_date = Merchant.revenue('Tue, 20 Mar 2012')
+      revenue_for_date = Merchant.revenue(Date.parse('Tue, 20 Mar 2012'))
       assert revenue_for_date != nil
     end
 
@@ -184,10 +184,10 @@ module SalesEngine
       Merchant.build_merchant(merchant_contents)
 
       merchant = Merchant.find_by_name('Dicki-Bednar')
-      assert_equal 114839374, merchant.revenue
+      assert_equal BigDecimal.new('1148393.74'), merchant.revenue
 
       merchant = Merchant.find_by_name('Willms and Sons')
-      assert_equal 837329, merchant.revenue('Fri, 09 Mar 2012')
+      assert_equal BigDecimal('8373.29'), merchant.revenue(Date.parse('Fri, 09 Mar 2012'))
     end
 
     def test_it_returns_favorite_customers
@@ -209,9 +209,9 @@ module SalesEngine
       merchant = Merchant.find_by_name("Terry-Moore")
       customer = Customer.find_by_id(300)
       assert_equal customer, merchant.favorite_customer
-    end 
+    end
 
-    def test_it_returns_customers_with_pending_transactions 
+    def test_it_returns_customers_with_pending_transactions
 
       customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
       Customer.build_customer(customer_contents)
@@ -232,7 +232,7 @@ module SalesEngine
       Merchant.build_merchant(merchant_contents)
 
       merchant_name = Merchant.find_by_name("Parisian Group")
-      customer = merchant_name.customers_with_pending_transactions
+      customer = merchant_name.customers_with_pending_invoices
 
       assert_equal 4, customer.count
     end

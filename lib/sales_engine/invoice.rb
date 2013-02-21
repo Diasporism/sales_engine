@@ -11,6 +11,14 @@ module SalesEngine
       @updated_at = Date.parse(row[:updated_at])
     end
 
+    def merchant
+      Merchant.find_by_id(merchant_id)
+    end
+
+    def customer
+      Customer.find_by_id(customer_id)
+    end
+
     def self.build_invoice(contents)
       @@invoices = []
       contents.each do |row|
@@ -107,10 +115,6 @@ module SalesEngine
       item_list
     end
 
-    def customer
-      Customer.find_by_id(customer_id)
-    end
-
     def format_dates(invoices)
       invoices.each do |invoice|
         Date.parse(invoice.created_at)
@@ -169,6 +173,28 @@ module SalesEngine
         end 
       end
       successful_invoices
-    end 
+    end
+
+    def self.create(input)
+      time = Time.now.getutc.to_s
+
+      invoice_template = {:id => @@invoices.count + 1,
+                          :customer_id => input[:customer].id,
+                          :merchant_id => input[:merchant].id,
+                          :status => 'shipped',
+                          :created_at => time,
+                          :updated_at => time}
+
+      invoice = Invoice.new(invoice_template)
+      @@invoices << invoice
+      invoice_item_id = @@invoices.count
+      InvoiceItem.create(input[:items], invoice_item_id)
+      invoice
+    end
+
+    def charge(input)
+      invoice_id = self.id
+      Transaction.charge(input, invoice_id)
+    end
   end
 end
