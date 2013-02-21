@@ -117,5 +117,18 @@ module SalesEngine
       items_rank = items_rank.sort_by {|k, v| v }.reverse
       rank(items_rank, rank)
     end
+
+    def self.most_items(x)
+      rank = 1 if rank == 0 
+      items_quantity = InvoiceItem.get_item_quantity(Transaction.get_successful_transaction)
+      items_rank = items_rank.sort_by {|k, v| v }.reverse
+      rank(items_rank, rank)
+    end 
+
+    def best_day
+      dates = InvoiceItem.get_quantity_by_invoice_date(InvoiceItem.return_invoice_items_for_item(id, (Transaction.get_successful_transaction)))
+      dates = dates.sort_by {|k, v| v}.reverse.flatten
+      dates[0]
+    end 
   end
 end

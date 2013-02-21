@@ -159,5 +159,16 @@ module SalesEngine
       end
       pending_invoices
     end 
+
+     def self.return_successful_invoices(invoices)
+      successful_invoices = []
+      invoices.each do |invoice|
+        transactions = Transaction.find_all_by_invoice_id(invoice.id)
+        if transactions.any? { |transaction| transaction.result == "success"}
+            pending_invoices << invoice
+        end 
+      end
+      successful_invoices
+    end 
   end
 end

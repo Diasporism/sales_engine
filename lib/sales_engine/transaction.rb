@@ -108,7 +108,6 @@ module SalesEngine
 
     def self.get_pending_transaction
       pending_transactions = @@transactions.select { |transaction| transaction.result == '' }
-      puts pending_transactions
       pending_transactions
     end
   end

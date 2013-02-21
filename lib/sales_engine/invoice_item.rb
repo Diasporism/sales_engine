@@ -8,8 +8,8 @@ module SalesEngine
       @id = row[:id].to_i
       @item_id = row[:item_id].to_i
       @invoice_id = row[:invoice_id].to_i
-      quantity = row[:quantity].to_i
-      @quantity = BigDecimal.new(quantity.to_s)
+      @quantity = row[:quantity].to_i
+      # @quantity = BigDecimal.new(quantity.to_s)
       unit_price = row[:unit_price].to_i.round(3) / 100
       @unit_price = BigDecimal.new(unit_price.to_s)
       @created_at = row[:created_at]
@@ -110,6 +110,30 @@ module SalesEngine
       Item.find_by_id(item_id)
     end
 
+    def self.return_invoice_items_for_item(id, successful_transactions)
+      items = get_sold_invoice_items(successful_transactions)
+      invoice_items_and_id = []
+
+      items.each do |invoice_item|
+        if invoice_item.item_id == id
+          invoice_items_and_id << invoice_item
+        end
+      end
+      invoice_items_and_id
+    end 
+
+    def self.get_quantity_by_invoice_date(invoice_items)
+      
+      invoice_totals = Hash.new(0)
+      invoice_items.each do |invoice_item|
+        value = invoice_item.quantity
+        invoice = Invoice.find_by_id(invoice_item.invoice_id)
+        key = invoice.created_at
+        invoice_totals[key] += value
+      end
+      invoice_totals
+    end
+
     def self.get_sold_invoice_items(successful_transactions)
       successful_transactions.map do |transaction|
         InvoiceItem.find_all_by_invoice_id(transaction.invoice_id)
@@ -153,7 +177,6 @@ module SalesEngine
         puts key
         invoice_totals_by_date[key] += value
       end
-      puts invoice_totals_by_date
       invoice_totals_by_date
     end
 
@@ -182,5 +205,27 @@ module SalesEngine
       end
       item_totals
     end
+
+    def self.get_item_quantity(successful_transactions)
+      invoice_items = get_sold_invoice_items(successful_transactions)
+
+      item_quantities = Hash.new(0)
+      invoice_items.each do |invoice_item|
+        value = (invoice_item.quantity)
+        key = invoice_item.item_id
+        item_quantities[key] += value 
+      end
+    end 
+
+    def self.match_items_to_invoice(successful_transactions)
+      invoice_items = get_sold_invoice_items(successful_transactions)
+
+      items_by_invoice_id = Hash.new(0)
+      invoice_items.each do |invoice_item|
+        key = invoice_item.id
+        value = invoice_item.invoice_id
+      end
+    end
+
   end
 end
