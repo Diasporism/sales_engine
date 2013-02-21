@@ -85,5 +85,42 @@ module SalesEngine
       invoices.each { |invoice| customers << Customer.find_by_id(invoice.customer_id)}
       customers.flatten
     end
+
+    def transactions
+      invoices = Invoice.find_all_by_customer_id(id)
+      customer_transactions = Transaction.return_transactions(invoices)
+      puts customer_transactions
+      customer_transactions
+    end 
+
+    # def favorite_merchant
+    #   successful_transactions = Transaction.get_successful_transaction
+
+    #   customer_merchants = Hash.new(0)
+    #   successful_transactions.each do |transaction|
+    #     invoice = Invoice.find_by_id(transaction.invoice_id)
+    #     if invoice.customer_id == id
+    #       key = invoice.merchant_id
+    #       value = 1
+    #       customer_merchants[key] += value
+    #     end
+    #     #rank the array by value
+    #     #return the merchant object for the highest ranked merchant
+    #   end
+    # end
+
+        #find its corresponding invoice
+        #if that invoice.customer_id == id
+        #key = merchant_id
+        #value +=1
+
+        #if transaction.id == customer_id
+        #key = merchant_id
+        #value = += 1
+        #value = 1
+      #end
+      #for top ranked merchant
+      #return merchant object
+      
   end
 end

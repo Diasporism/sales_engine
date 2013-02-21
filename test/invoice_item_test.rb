@@ -17,8 +17,10 @@ module SalesEngine
     end
 
     def test_invoice_items_have_correct_state
-      data = {:id => '1', :item_id => '2', :invoice_id => '3', :quantity => '4',
-              :unit_price => '5', :created_at => '2012-03-27 14:53:59 UTC', :updated_at => '2012-03-27 14:53:59 UTC'}
+      data = {:id => '1', :item_id => '2', :invoice_id => '3', 
+              :quantity => '4', :unit_price => '5', 
+              :created_at => '2012-03-27 14:53:59 UTC', 
+              :updated_at => '2012-03-27 14:53:59 UTC'}
 
       invoice_item = InvoiceItem.new(data)
       assert_equal 1, invoice_item.id

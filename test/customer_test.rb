@@ -17,7 +17,8 @@ module SalesEngine
 
     def test_customers_have_correct_state
       data = {:id => '1', :first_name => 'Thomas', :last_name => 'Jefferson',
-              :created_at => '2012-03-27 14:53:59 UTC', :updated_at => '2012-03-27 14:53:59 UTC'}
+              :created_at => '2012-03-27 14:53:59 UTC', 
+              :updated_at => '2012-03-27 14:53:59 UTC'}
 
       customer = Customer.new(data)
       assert_equal 1, customer.id
@@ -115,6 +116,32 @@ module SalesEngine
       customer = Customer.find_by_id(1)
       invoices = customer.invoices
       assert_equal 2, invoices.count
+    end
+
+    def test_it_returns_customers_transactions
+
+      customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+      Customer.build_customer(customer_contents)
+
+      invoice_contents = CSV.open './data/invoices.csv', headers: true, header_converters: :symbol
+      Invoice.build_invoice(invoice_contents)
+
+      invoice_item_contents = CSV.open './data/invoice_items.csv', headers: true, header_converters: :symbol
+      InvoiceItem.build_invoice_item(invoice_item_contents)
+
+      item_contents = CSV.open './data/items.csv', headers: true, header_converters: :symbol
+      Item.build_item(item_contents)
+
+      transaction_contents = CSV.open './data/transactions.csv', headers: true, header_converters: :symbol
+      Transaction.build_transaction(transaction_contents)
+
+      merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
+      Merchant.build_merchant(merchant_contents)
+
+      customer = Customer.find_by_id(2)
+      customer_transactions = customer.transactions
+
+      assert_equal 1, customer_transactions.count
     end
   end
 end

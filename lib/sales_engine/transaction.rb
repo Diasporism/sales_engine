@@ -1,6 +1,7 @@
 module SalesEngine
   class Transaction
-    attr_reader :id, :invoice_id, :credit_card_number, :credit_card_expiration_date, :result, :created_at, :updated_at
+    attr_reader :id, :invoice_id, :credit_card_number, 
+    :credit_card_expiration_date, :result, :created_at, :updated_at
 
     def initialize(row)
       @id = row[:id].to_i
@@ -55,7 +56,9 @@ module SalesEngine
     ############################ Credit_Card_Number
 
     def self.find_by_credit_card_number(number)
-      @@transactions.find { |transaction| transaction.credit_card_number == number}
+      @@transactions.find do
+       |transaction| transaction.credit_card_number == number
+     end
     end
 
     def self.find_all_by_credit_card_number(number)
@@ -118,14 +121,22 @@ module SalesEngine
     def self.charge(input, invoice_id)
       time = Time.now.getutc.to_s
       transaction_template = {:id => Transaction.count,
-                              :invoice_id => invoice_id,
-                              :credit_card_number => input[:credit_card_number],
-                              :credit_card_expiration_date => input[:credit_card_expiration_date],
-                              :result => input[:result],
-                              :created_at => time,
-                              :updated_at => time}
+            :invoice_id => invoice_id,
+            :credit_card_number => input[:credit_card_number],
+            :credit_card_expiration_date => input[:credit_card_expiration_date],
+            :result => input[:result],
+            :created_at => time,
+            :updated_at => time}
       transaction = Transaction.new(transaction_template)
       @@transactions << transaction
     end
+
+    def self.return_transactions(invoices)
+      transactions = []
+      invoices.each do |invoice|
+        transactions << Transaction.find_all_by_invoice_id(invoice.id)
+      end.flatten!
+    transactions
+    end 
   end
 end
