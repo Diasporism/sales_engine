@@ -11,9 +11,7 @@ module SalesEngine
 
     def self.build_merchant(contents)
       @@merchants = []
-      contents.each do |row|
-        @@merchants << Merchant.new(row)
-      end
+      contents.each {|row| @@merchants << Merchant.new(row)}
       @@merchants.count
     end
 
@@ -25,44 +23,36 @@ module SalesEngine
       @@merchants.sample
     end
 
-    ############################ ID
-
     def self.find_by_id(id)
-      @@merchants.find { |merchant| merchant.id == id}
+      @@merchants.find {|m| m.id == id}
     end
 
     def self.find_all_by_id(id)
-      @@merchants.select { |merchant| merchant.id == id}
+      @@merchants.select {|m| m.id == id}
     end
 
-    ############################ Name
-
     def self.find_by_name(name)
-      @@merchants.find { |merchant| merchant.name.downcase == name.downcase}
+      @@merchants.find {|m| m.name.downcase == name.downcase}
     end
 
     def self.find_all_by_name(name)
-      @@merchants.select { |merchant| merchant.name.downcase == name.downcase}
+      @@merchants.select {|m| m.name.downcase == name.downcase}
     end
 
-    ############################ Created_At
-
     def self.find_by_created_at(date)
-      @@merchants.find { |merchant| merchant.created_at.downcase == date.downcase}
+      @@merchants.find {|m| m.created_at.downcase == date.downcase}
     end
 
     def self.find_all_by_created_at(date)
-      @@merchants.select { |merchant| merchant.created_at.downcase == date.downcase}
+      @@merchants.select {|m| m.created_at.downcase == date.downcase}
     end
 
-    ############################ Updated_At
-
     def self.find_by_updated_at(date)
-      @@merchants.find { |merchant| merchant.updated_at.downcase == date.downcase}
+      @@merchants.find {|m| m.updated_at.downcase == date.downcase}
     end
 
     def self.find_all_by_updated_at(date)
-      @@merchants.select { |merchant| merchant.updated_at.downcase == date.downcase}
+      @@merchants.select {|m| m.updated_at.downcase == date.downcase}
     end
 
     def self.merchants
@@ -78,13 +68,13 @@ module SalesEngine
     end
 
     def self.rank(array, rank)
-      array[0..(rank - 1)].map { |item| Merchant.find_by_id(item[0]) }
+      array[0..(rank - 1)].map {|item| Merchant.find_by_id(item[0])}
     end
 
     def self.most_revenue(rank)
       rank = 1 if rank == 0
-      most_items = Merchant.sum_value_by_merchant_id(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
-      rank(most_items, rank)
+      most_revenue = Merchant.sum_value_by_merchant_id(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
+      rank(most_revenue, rank)
     end
 
     def self.most_items(rank)
@@ -94,10 +84,9 @@ module SalesEngine
     end
 
     def self.revenue(date)
-      #date = Date.parse(date)
-      array = Invoice.sum_revenue_by_date(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
-      answer = array.select { |item| item[0] == date }.flatten
-      answer[1]
+      results = Invoice.sum_revenue_by_date(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
+      results = results.select { |item| item[0] == date }.flatten
+      results[1]
     end
 
     def revenue(date=nil)
@@ -137,17 +126,5 @@ module SalesEngine
     def customers_with_pending_invoices
       Customer.return_customers_for_invoices(Invoice.find_transactions_for_pending_invoices(Invoice.find_all_by_merchant_id(id)))
     end
-
-    #def favorite_customer
-    #  customers.sort_by{|customer| invoices_for(customer).count }.reverse.first
-    #end
-    #
-    #def invoices_for(customer)
-    #  successful_invoices.select{|i| i.customer_id == customer.id}
-    #end
-    #
-    #def successful_invoices
-    #  Invoice.successful_invoices_for_merchant_id(self.id)
-    #end
   end
 end
