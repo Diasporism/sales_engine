@@ -1,6 +1,6 @@
 module SalesEngine
   class Item
-    attr_reader :id, :name, :description, :unit_price, :merchant_id, 
+    attr_reader :id, :name, :description, :unit_price, :merchant_id,
                 :created_at, :updated_at
 
     def initialize(row)
@@ -30,74 +30,60 @@ module SalesEngine
       @@items.sample
     end
 
-    ############################ ID
-
     def self.find_by_id(id)
-      @@items.find { |item| item.id == id}
+      @@items.find {|i| i.id == id}
     end
 
     def self.find_all_by_id(id)
-      @@items.select { |item| item.id == id}
+      @@items.select {|i| i.id == id}
     end
 
-    ############################ Name
-
     def self.find_by_name(name)
-      @@items.find { |item| item.name.downcase == name.downcase}
+      @@items.find {|i| i.name.downcase == name.downcase}
     end
 
     def self.find_all_by_name(name)
-      @@items.select { |item| item.name.downcase == name.downcase}
+      @@items.select {|i| i.name.downcase == name.downcase}
     end
 
-    ############################ Description
-
     def self.find_by_description(description)
-      @@items.find { |item| item.description == description}
+      @@items.find {|i| i.description == description}
     end
 
     def self.find_all_by_description(description)
-      @@items.select { |item| item.description == description}
+      @@items.select {|i| i.description == description}
     end
 
-    ############################ Unit_Price
-
     def self.find_by_unit_price(price)
-      @@items.find { |item| item.unit_price == price}
+      @@items.find {|i| i.unit_price == price}
     end
 
     def self.find_all_by_unit_price(price)
-      @@items.select { |item| item.unit_price == price}
+      @@items.select { |i| i.unit_price == price}
     end
 
-    ############################ Merchant_ID
-
     def self.find_by_merchant_id(id)
-      @@items.find { |item| item.merchant_id == id}
+      @@items.find {|i| i.merchant_id == id}
     end
 
     def self.find_all_by_merchant_id(id)
-      @@items.select { |item| item.merchant_id == id}
+      @@items.select {|i| i.merchant_id == id}
     end
 
-    ############################ Created_At
-
     def self.find_by_created_at(date)
-      @@items.find { |item| item.created_at.downcase == date.downcase}
+      @@items.find {|i| i.created_at.downcase == date.downcase}
     end
 
     def self.find_all_by_created_at(date)
-      @@items.select { |item| item.created_at.downcase == date.downcase}
+      @@items.select {|i| i.created_at.downcase == date.downcase}
     end
 
-    ############################ Updated_At
-
     def self.find_by_updated_at(date)
-      @@items.find { |item| item.updated_at.downcase == date.downcase}
+      @@items.find {|i| i.updated_at.downcase == date.downcase}
     end
 
     def self.find_all_by_updated_at(date)
-      @@items.select { |item| item.updated_at.downcase == date.downcase}
+      @@items.select {|i| i.updated_at.downcase == date.downcase}
     end
 
     def invoice_items
@@ -121,12 +107,12 @@ module SalesEngine
     end
 
     def self.most_items(rank)
-      rank = 1 if rank == 0 
+      rank = 1 if rank == 0
       transactions = Transaction.get_successful_transaction
       items_quantity = InvoiceItem.get_item_quantity(transactions)
       items_rank = items_quantity.sort_by {|k, v| v }.reverse
       rank(items_rank, rank)
-    end 
+    end
 
     def best_day
       transactions = Transaction.get_successful_transaction
@@ -134,6 +120,6 @@ module SalesEngine
       dates = InvoiceItem.get_quantity_by_invoice_date(item)
       dates = dates.sort_by {|k, v| v}.reverse.flatten
       dates[0]
-    end 
+    end
   end
 end

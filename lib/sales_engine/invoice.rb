@@ -1,6 +1,6 @@
 module SalesEngine
   class Invoice
-    attr_reader :id, :customer_id, :merchant_id, :status, 
+    attr_reader :id, :customer_id, :merchant_id, :status,
                 :created_at, :updated_at
 
     def initialize(row)
@@ -22,9 +22,7 @@ module SalesEngine
 
     def self.build_invoice(contents)
       @@invoices = []
-      contents.each do |row|
-        @@invoices << Invoice.new(row)
-      end
+      contents.each {|row| @@invoices << Invoice.new(row)}
       @@invoices.count
     end
 
@@ -36,64 +34,52 @@ module SalesEngine
       @@invoices.sample
     end
 
-    ############################ ID
-
     def self.find_by_id(id)
-      @@invoices.find { |invoice| invoice.id == id}
+      @@invoices.find {|i| i.id == id}
     end
 
     def self.find_all_by_id(id)
-      @@invoices.select { |invoice| invoice.id == id}
+      @@invoices.select {|i| i.id == id}
     end
 
-    ############################ Customer_ID
-
     def self.find_by_customer_id(id)
-      @@invoices.find { |invoice| invoice.customer_id == id}
+      @@invoices.find {|i| i.customer_id == id}
     end
 
     def self.find_all_by_customer_id(id)
-      @@invoices.select { |invoice| invoice.customer_id == id}
+      @@invoices.select {|i| i.customer_id == id}
     end
 
-    ############################ Merchant_ID
-
     def self.find_by_merchant_id(id)
-      @@invoices.find { |invoice| invoice.merchant_id == id}
+      @@invoices.find {|i| i.merchant_id == id}
     end
 
     def self.find_all_by_merchant_id(id)
-      @@invoices.select { |invoice| invoice.merchant_id == id}
+      @@invoices.select {|i| i.merchant_id == id}
     end
 
-    ############################ Status
-
     def self.find_by_status(id)
-      @@invoices.find { |invoice| invoice.status == id}
+      @@invoices.find {|i| i.status == id}
     end
 
     def self.find_all_by_status(id)
-      @@invoices.select { |invoice| invoice.status == id}
+      @@invoices.select {|i| i.status == id}
     end
 
-    ############################ Created_At
-
     def self.find_by_created_at(date)
-      @@invoices.find { |invoice| invoice.created_at == Date.parse(date)}
+      @@invoices.find {|i| i.created_at == Date.parse(date)}
     end
 
     def self.find_all_by_created_at(date)
-      @@invoices.select { |invoice| invoice.created_at == Date.parse(date)}
+      @@invoices.select {|i| i.created_at == Date.parse(date)}
     end
 
-    ############################ Updated_At
-
     def self.find_by_updated_at(date)
-      @@invoices.find { |invoice| invoice.updated_at == Date.parse(date)}
+      @@invoices.find {|i| i.updated_at == Date.parse(date)}
     end
 
     def self.find_all_by_updated_at(date)
-      @@invoices.select { |invoice| invoice.updated_at == Date.parse(date)}
+      @@invoices.select {|i| i.updated_at == Date.parse(date)}
     end
 
     def transactions
@@ -114,9 +100,7 @@ module SalesEngine
     end
 
     def format_dates(invoices)
-      invoices.each do |invoice|
-        Date.parse(invoice.created_at)
-      end
+      invoices.each {|i| Date.parse(i.created_at)}
     end
 
     def self.sum_revenue_by_date(invoice_totals)
@@ -143,50 +127,55 @@ module SalesEngine
     end
 
     def self.get_invoices_by_merchant(id, invoices)
-      invoices.select { |invoice| invoice if invoice.merchant_id == id}
+      invoices.select {|i| i if i.merchant_id == id}
     end
 
     def self.get_invoices_by_date(date, invoices)
-      invoices.select { |invoice| invoice if invoice.created_at == date}
+      invoices.select {|i| i if i.created_at == date}
     end
 
     def self.find_transactions_for_pending_invoices(invoices)
       pending_invoices = []
       invoices.each do |invoice|
         transactions = Transaction.find_all_by_invoice_id(invoice.id)
-        if transactions.none? { |transaction| transaction.result == "success"}
+        if transactions.none? {|t| t.result == 'success'}
             pending_invoices << invoice
-        end 
+        end
       end
       pending_invoices
-    end 
+    end
 
      def self.return_successful_invoices(invoices)
       successful_invoices = []
       invoices.each do |invoice|
         transactions = Transaction.find_all_by_invoice_id(invoice.id)
-        if transactions.any? { |transaction| transaction.result == "success"}
+        if transactions.any? {|t| t.result == 'success'}
             successful_invoices << invoice
-        end 
+        end
       end
       successful_invoices
     end
 
     def self.create(input)
-      time = Time.now.getutc.to_s
-
-      invoice_template = {:id => @@invoices.count + 1,
-                          :customer_id => input[:customer].id,
-                          :merchant_id => input[:merchant].id,
-                          :status => 'shipped',
-                          :created_at => time,
-                          :updated_at => time}
-
+      invoice_template = build_invoice_template(input)
       invoice = Invoice.new(invoice_template)
       @@invoices << invoice
       invoice_item_id = @@invoices.count
       InvoiceItem.create(input[:items], invoice_item_id)
       invoice
+    end
+
+    def self.build_invoice_template(input)
+      {:id => @@invoices.count + 1,
+       :customer_id => input[:customer].id,
+       :merchant_id => input[:merchant].id,
+       :status => 'shipped',
+       :created_at => time,
+       :updated_at => time}
+    end
+
+    def self.time
+      Time.now.getutc.to_s
     end
 
     def charge(input)

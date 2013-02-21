@@ -2,7 +2,7 @@
 
 module SalesEngine
   class InvoiceItem
-    attr_reader :id, :item_id, :invoice_id, :quantity, :unit_price, 
+    attr_reader :id, :item_id, :invoice_id, :quantity, :unit_price,
     :created_at, :updated_at
 
     def initialize(row)
@@ -10,7 +10,6 @@ module SalesEngine
       @item_id = row[:item_id].to_i
       @invoice_id = row[:invoice_id].to_i
       @quantity = row[:quantity].to_i
-      # @quantity = BigDecimal.new(quantity.to_s)
       unit_price = row[:unit_price].to_i.round(3) / 100
       @unit_price = BigDecimal.new(unit_price.to_s)
       @created_at = row[:created_at]
@@ -33,86 +32,60 @@ module SalesEngine
       @@invoice_items.sample
     end
 
-    ############################ ID
-
     def self.find_by_id(id)
-      @@invoice_items.find { |invoice_item| invoice_item.id == id}
+      @@invoice_items.find {|i| i.id == id}
     end
 
     def self.find_all_by_id(id)
-      @@invoice_items.select { |invoice_item| invoice_item.id == id}
+      @@invoice_items.select {|i| i.id == id}
     end
 
-    ############################ Item_ID
-
     def self.find_by_item_id(id)
-      @@invoice_items.find { |invoice_item| invoice_item.item_id == id}
+      @@invoice_items.find {|i| i.item_id == id}
     end
 
     def self.find_all_by_item_id(id)
-      @@invoice_items.select { |invoice_item| invoice_item.item_id == id}
+      @@invoice_items.select { |i| i.item_id == id}
     end
 
-      ############################ Invoice_ID
-
     def self.find_by_invoice_id(invoice_id)
-      @@invoice_items.find do 
-        |invoice_item| invoice_item.invoice_id == invoice_id
-      end 
+      @@invoice_items.find {|i| i.invoice_id == invoice_id}
     end
 
     def self.find_all_by_invoice_id(invoice_id)
-      @@invoice_items.select do 
-        |invoice_item| invoice_item.invoice_id == invoice_id
-      end
+      @@invoice_items.select {|i| i.invoice_id == invoice_id}
     end
 
-    ############################ Quanitity
-
     def self.find_by_quantity(number)
-      @@invoice_items.find { |invoice_item| invoice_item.quantity == number}
+      @@invoice_items.find {|i| i.quantity == number}
     end
 
     def self.find_all_by_quantity(number)
-      @@invoice_items.select { |invoice_item| invoice_item.quantity == number}
+      @@invoice_items.select {|i| i.quantity == number}
     end
 
-    ############################ Unit Price
-
     def self.find_by_unit_price(price)
-      @@invoice_items.find { |invoice_item| invoice_item.unit_price == price}
+      @@invoice_items.find {|i| i.unit_price == price}
     end
 
     def self.find_all_by_unit_price(price)
-      @@invoice_items.select { |invoice_item| invoice_item.unit_price == price}
+      @@invoice_items.select {|i| i.unit_price == price}
     end
 
-    ############################ Created_At
-
     def self.find_by_created_at(date)
-      @@invoice_items.find do 
-        |invoice_item| invoice_item.created_at.downcase == date.downcase
-      end
+      @@invoice_items.find {|i| i.created_at.downcase == date.downcase}
     end
 
     def self.find_all_by_created_at(date)
-      @@invoice_items.select do 
-        |invoice_item| invoice_item.created_at.downcase == date.downcase
-      end
+      @@invoice_items.select {|i| i.created_at.downcase == date.downcase}
     end
 
-    ############################ Updated_At
-
     def self.find_by_updated_at(date)
-      @@invoice_items.find do 
-        |invoice_item| invoice_item.updated_at.downcase == date.downcase
-      end
+      @@invoice_items.find {|i| i.updated_at.downcase == date.downcase}
     end
 
     def self.find_all_by_updated_at(date)
-      @@invoice_items.select do 
-        |invoice_item| invoice_item.updated_at.downcase == date.downcase
-      end
+      @@invoice_items.select {|i| i.updated_at.downcase == date.downcase}
     end
 
     def invoice
@@ -126,17 +99,15 @@ module SalesEngine
     def self.return_invoice_items_for_item(id, successful_transactions)
       items = get_sold_invoice_items(successful_transactions)
       invoice_items_and_id = []
-
       items.each do |invoice_item|
         if invoice_item.item_id == id
           invoice_items_and_id << invoice_item
         end
       end
       invoice_items_and_id
-    end 
+    end
 
     def self.get_quantity_by_invoice_date(invoice_items)
-      
       invoice_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = invoice_item.quantity
@@ -167,18 +138,14 @@ module SalesEngine
 
     def self.get_invoice_items_for_invoices(invoices)
       items = []
-      invoices.each do 
-        |invoice| items << InvoiceItem.find_all_by_invoice_id(invoice.id) 
-      end
+      invoices.each {|i| items << InvoiceItem.find_all_by_invoice_id(i.id)}
       items.flatten
     end
 
     def self.sum_revenue(invoices)
       invoice_items = get_invoice_items_for_invoices(invoices)
       revenues = []
-      invoice_items.each do 
-        |invoice_item| revenues << (invoice_item.quantity * invoice_item.unit_price) 
-      end
+      invoice_items.each {|i| revenues << (i.quantity * i.unit_price)}
       revenues.inject(:+)
     end
 
@@ -208,7 +175,6 @@ module SalesEngine
 
     def self.get_item_revenue(successful_transactions)
       invoice_items = get_sold_invoice_items(successful_transactions)
-
       item_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
@@ -220,27 +186,27 @@ module SalesEngine
 
     def self.get_item_quantity(successful_transactions)
       invoice_items = get_sold_invoice_items(successful_transactions)
-
       item_quantities = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = invoice_item.quantity
         key = invoice_item.item_id
-        item_quantities[key] += value 
+        item_quantities[key] += value
       end
       item_quantities
     end
 
+    def self.time
+      Time.now.getutc.to_s
+    end
+
     def self.create(items, invoice_item_id)
-      time = Time.now.getutc.to_s
       items_count = Hash.new(0)
       items.each do |item|
         items_count[item] += 1
       end
-
       items.each do |item|
         quantity = items_count.select { |k, v| k == item}.values
         quantity = quantity[0].to_i
-
         invoice_item_template = {:id => @@invoice_items.count + 1,
                                  :item_id => item.id,
                                  :invoice_id => invoice_item_id,
@@ -248,7 +214,6 @@ module SalesEngine
                                  :unit_price => item.unit_price,
                                  :created_at => time,
                                  :updated_at => time}
-
         invoice_item = InvoiceItem.new(invoice_item_template)
         @@invoice_items << invoice_item
       end
