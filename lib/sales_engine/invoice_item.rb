@@ -56,11 +56,15 @@ module SalesEngine
       ############################ Invoice_ID
 
     def self.find_by_invoice_id(invoice_id)
-      @@invoice_items.find { |invoice_item| invoice_item.invoice_id == invoice_id}
+      @@invoice_items.find do 
+        |invoice_item| invoice_item.invoice_id == invoice_id
+      end 
     end
 
     def self.find_all_by_invoice_id(invoice_id)
-      @@invoice_items.select { |invoice_item| invoice_item.invoice_id == invoice_id}
+      @@invoice_items.select do 
+        |invoice_item| invoice_item.invoice_id == invoice_id
+      end
     end
 
     ############################ Quanitity
@@ -86,21 +90,29 @@ module SalesEngine
     ############################ Created_At
 
     def self.find_by_created_at(date)
-      @@invoice_items.find { |invoice_item| invoice_item.created_at.downcase == date.downcase}
+      @@invoice_items.find do 
+        |invoice_item| invoice_item.created_at.downcase == date.downcase
+      end
     end
 
     def self.find_all_by_created_at(date)
-      @@invoice_items.select { |invoice_item| invoice_item.created_at.downcase == date.downcase}
+      @@invoice_items.select do 
+        |invoice_item| invoice_item.created_at.downcase == date.downcase
+      end
     end
 
     ############################ Updated_At
 
     def self.find_by_updated_at(date)
-      @@invoice_items.find { |invoice_item| invoice_item.updated_at.downcase == date.downcase}
+      @@invoice_items.find do 
+        |invoice_item| invoice_item.updated_at.downcase == date.downcase
+      end
     end
 
     def self.find_all_by_updated_at(date)
-      @@invoice_items.select { |invoice_item| invoice_item.updated_at.downcase == date.downcase}
+      @@invoice_items.select do 
+        |invoice_item| invoice_item.updated_at.downcase == date.downcase
+      end
     end
 
     def invoice
@@ -143,7 +155,6 @@ module SalesEngine
 
     def self.get_invoice_revenue(successful_transactions)
       invoice_items = get_sold_invoice_items(successful_transactions)
-
       invoice_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
@@ -155,27 +166,29 @@ module SalesEngine
     end
 
     def self.get_invoice_items_for_invoices(invoices)
-      invoice_items = []
-      invoices.each { |invoice| invoice_items << InvoiceItem.find_all_by_invoice_id(invoice.id) }
-      invoice_items.flatten
+      items = []
+      invoices.each do 
+        |invoice| items << InvoiceItem.find_all_by_invoice_id(invoice.id) 
+      end
+      items.flatten
     end
 
     def self.sum_revenue(invoices)
       invoice_items = get_invoice_items_for_invoices(invoices)
       revenues = []
-      invoice_items.each { |invoice_item| revenues << (invoice_item.quantity * invoice_item.unit_price) }
+      invoice_items.each do 
+        |invoice_item| revenues << (invoice_item.quantity * invoice_item.unit_price) 
+      end
       revenues.inject(:+)
     end
 
     def self.get_invoice_revenue_by_date(successful_transactions)
       invoice_items = get_sold_invoice_items(successful_transactions)
       invoice_totals_by_date = Hash.new(0)
-
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
         value = BigDecimal.new(value)
         key = Invoice.find_by_id(invoice_item.invoice_id).created_at
-        puts key
         invoice_totals_by_date[key] += value
       end
       invoice_totals_by_date
@@ -183,7 +196,6 @@ module SalesEngine
 
     def self.get_invoice_quantity(successful_transactions)
       invoice_items = get_sold_invoice_items(successful_transactions)
-
       invoice_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = invoice_item.quantity
@@ -200,7 +212,6 @@ module SalesEngine
       item_totals = Hash.new(0)
       invoice_items.each do |invoice_item|
         value = (invoice_item.quantity * invoice_item.unit_price)
-        #value = BigDecimal.new(value)
         key = invoice_item.item_id
         item_totals[key] += value
       end
