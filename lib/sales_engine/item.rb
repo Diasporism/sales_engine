@@ -1,7 +1,7 @@
 module SalesEngine
   class Item
     attr_reader :id, :name, :description, :unit_price, :merchant_id, 
-    :created_at, :updated_at
+                :created_at, :updated_at
 
     def initialize(row)
       @id = row[:id].to_i
@@ -114,20 +114,24 @@ module SalesEngine
 
     def self.most_revenue(rank)
       rank = 1 if rank == 0
-      items_rank = InvoiceItem.get_item_revenue(Transaction.get_successful_transaction)
+      transactions = Transaction.get_successful_transaction
+      items_rank = InvoiceItem.get_item_revenue(transactions)
       items_rank = items_rank.sort_by {|k, v| v }.reverse
       rank(items_rank, rank)
     end
 
     def self.most_items(rank)
       rank = 1 if rank == 0 
-      items_quantity = InvoiceItem.get_item_quantity(Transaction.get_successful_transaction)
+      transactions = Transaction.get_successful_transaction
+      items_quantity = InvoiceItem.get_item_quantity(transactions)
       items_rank = items_quantity.sort_by {|k, v| v }.reverse
       rank(items_rank, rank)
     end 
 
     def best_day
-      dates = InvoiceItem.get_quantity_by_invoice_date(InvoiceItem.return_invoice_items_for_item(id, (Transaction.get_successful_transaction)))
+      transactions = Transaction.get_successful_transaction
+      item = InvoiceItem.return_invoice_items_for_item(id, (transactions)
+      dates = InvoiceItem.get_quantity_by_invoice_date(item)
       dates = dates.sort_by {|k, v| v}.reverse.flatten
       dates[0]
     end 
