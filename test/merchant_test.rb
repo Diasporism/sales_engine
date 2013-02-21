@@ -210,7 +210,10 @@ module SalesEngine
        merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
        Merchant.build_merchant(merchant_contents)
 
-       merchant = Merchant.find_by_name("Terry-Moore")
+       customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
+       Customer.build_customer(customer_contents)
+
+       merchant = Merchant.find_by_name('Terry-Moore')
        customer = Customer.find_by_id(300)
        assert_equal customer, merchant.favorite_customer
     end
@@ -235,7 +238,7 @@ module SalesEngine
        merchant_contents = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
        Merchant.build_merchant(merchant_contents)
 
-       merchant_name = Merchant.find_by_name("Parisian Group")
+       merchant_name = Merchant.find_by_name('Parisian Group')
        customer = merchant_name.customers_with_pending_invoices
 
        assert_equal 4, customer.count
