@@ -5,7 +5,7 @@ require 'bundler/version'
 
 Gem::Specification.new do |gem|
   gem.name        = 'sales_engine'
-  gem.version     = '0.0.1'
+  gem.version     = '1.0.0'
   gem.summary     = "Sales Engine"
   gem.description = "Sales Engine"
   gem.authors     = ["Logan Sears", "Chelsea Komlo"]
