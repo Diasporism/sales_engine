@@ -6,4 +6,4 @@ end
 require 'minitest/autorun'
 require 'minitest/pride'
 
-require './lib/sales_engine'
+require 'sales_engine'

@@ -219,7 +219,6 @@ module SalesEngine
     end
 
     def test_it_returns_customers_with_pending_transactions
-
        customer_contents = CSV.open './data/customers.csv', headers: true, header_converters: :symbol
        Customer.build_customer(customer_contents)
 
