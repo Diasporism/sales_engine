@@ -93,34 +93,32 @@ module SalesEngine
       customer_transactions
     end 
 
-    # def favorite_merchant
-    #   successful_transactions = Transaction.get_successful_transaction
+    def favorite_merchant
+      successful_transactions = Transaction.get_successful_transaction
 
-    #   customer_merchants = Hash.new(0)
-    #   successful_transactions.each do |transaction|
-    #     invoice = Invoice.find_by_id(transaction.invoice_id)
-    #     if invoice.customer_id == id
-    #       key = invoice.merchant_id
-    #       value = 1
-    #       customer_merchants[key] += value
-    #     end
-    #     #rank the array by value
-    #     #return the merchant object for the highest ranked merchant
-    #   end
-    # end
-
-        #find its corresponding invoice
-        #if that invoice.customer_id == id
-        #key = merchant_id
-        #value +=1
-
-        #if transaction.id == customer_id
-        #key = merchant_id
-        #value = += 1
-        #value = 1
-      #end
-      #for top ranked merchant
-      #return merchant object
+      customer_merchants = Hash.new(0)
+      successful_transactions.each do |transaction|
+        invoice = Invoice.find_by_id(transaction.invoice_id)
+        if invoice.customer_id == id
+          key = invoice.merchant_id
+          value = 1
+          customer_merchants[key] += value
+        end
+        #rank the array by value
+        #return the merchant object for the highest ranked merchant
+      end
+    end
+    
+      #   create a new hash 
+      #   find successful transactions
+      #   for each transaction
+      #     find its corresponding invoice
+      #     if that invoice.customer_id == id
+      #     key = merchant_id
+      #     value +=1
+      # end
+      # for top ranked merchant in the array
+      # return merchant object
       
   end
 end

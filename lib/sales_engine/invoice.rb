@@ -169,7 +169,7 @@ module SalesEngine
       invoices.each do |invoice|
         transactions = Transaction.find_all_by_invoice_id(invoice.id)
         if transactions.any? { |transaction| transaction.result == "success"}
-            pending_invoices << invoice
+            successful_invoices << invoice
         end 
       end
       successful_invoices
