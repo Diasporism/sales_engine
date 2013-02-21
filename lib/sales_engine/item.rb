@@ -130,7 +130,7 @@ module SalesEngine
 
     def best_day
       transactions = Transaction.get_successful_transaction
-      item = InvoiceItem.return_invoice_items_for_item(id, (transactions)
+      item = InvoiceItem.return_invoice_items_for_item(id, (transactions))
       dates = InvoiceItem.get_quantity_by_invoice_date(item)
       dates = dates.sort_by {|k, v| v}.reverse.flatten
       dates[0]
