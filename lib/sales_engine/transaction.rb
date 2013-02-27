@@ -14,6 +14,10 @@ module SalesEngine
       @updated_at = row[:updated_at].to_s
     end
 
+    def successful?
+      result == "success"
+    end
+
     def self.count
       @@transactions.count
     end

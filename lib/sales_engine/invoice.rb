@@ -99,6 +99,19 @@ module SalesEngine
       item_list
     end
 
+    def paid?
+      transactions.each { |t| return true if t.successful? }
+      return false
+    end
+
+    def total_spent
+      if paid?
+        invoice_items.inject(0) { |sum, item| sum + item.item_cost }
+      else
+        0
+      end
+    end
+
     def format_dates(invoices)
       invoices.each {|i| Date.parse(i.created_at)}
     end

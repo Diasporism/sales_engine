@@ -73,8 +73,7 @@ module SalesEngine
 
     def self.most_revenue(rank)
       rank = 1 if rank == 0
-      most_revenue = Merchant.sum_value_by_merchant_id(InvoiceItem.get_invoice_revenue(Transaction.get_successful_transaction))
-      rank(most_revenue, rank)
+      merchants.sort_by { |m| m.revenue }.reverse[0..(rank-1)]
     end
 
     def self.most_items(rank)
@@ -91,9 +90,12 @@ module SalesEngine
 
     def revenue(date=nil)
       if date == nil
-        InvoiceItem.sum_revenue(Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction)))
+        invoices.inject(0) { |sum, invoice| sum + invoice.total_spent }
       else
-        InvoiceItem.sum_revenue(Invoice.get_invoices_by_date(date, Invoice.get_invoices_by_merchant(id, Transaction.get_invoices_from_transaction(Transaction.get_successful_transaction))))
+        invoices.inject(0) do |sum, invoice|
+          sum += invoice.total_spent if invoice.created_at == date
+          sum
+        end
       end
     end
 

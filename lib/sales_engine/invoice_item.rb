@@ -16,6 +16,10 @@ module SalesEngine
       @updated_at = row[:updated_at]
     end
 
+    def item_cost
+      quantity * unit_price
+    end
+
     def self.build_invoice_item(contents)
       @@invoice_items = []
       contents.each do |row|
